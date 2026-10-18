@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spacing Inspector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-logo" viewBox="0 0 28 28" fill="none"><rect x="1.5" y="1.5" width="25" height="25" rx="6" stroke="#4C8DFF" stroke-width="1.6" stroke-dasharray="3 2.4"/><rect x="6" y="6" width="16" height="16" rx="4" stroke="#34D399" stroke-width="1.6"/><rect x="10.5" y="10.5" width="7" height="7" rx="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+    <symbol id="i-inspect" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    <symbol id="i-measure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></symbol>
+    <symbol id="i-audit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-rescan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
+    <symbol id="i-locate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 8 0 1 1 2.3 5.7"/><path d="M4 4v7h7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></symbol>
+  </svg>
+
+  <!-- HOME ------------------------------------------------------------- -->
+  <section class="view" id="view-home" hidden>
+    <header class="top">
+      <svg class="logo" width="28" height="28"><use href="#i-logo"/></svg>
+      <h1>Spacing Inspector</h1>
+      <span class="ver">2.0</span>
+      <span class="grow"></span>
+      <button class="icon-btn" data-go="shortcuts" aria-label="Keyboard shortcuts" title="Keyboard shortcuts"><svg width="18" height="18"><use href="#i-keyboard"/></svg></button>
+      <button class="icon-btn" data-go="customize" aria-label="Customize" title="Customize"><svg width="18" height="18"><use href="#i-sliders"/></svg></button>
+    </header>
+    <div class="body">
+      <section class="card power">
+        <div class="power-row">
+          <span class="status-dot" id="statusDot"></span>
+          <div class="grow">
+            <div class="power-title" id="statusTitle">Inspector off</div>
+            <div class="power-sub" id="statusSub">Turn on to inspect this page</div>
+          </div>
+          <button class="switch big" id="powerToggle" role="switch" aria-checked="false" aria-label="Inspector on this page"><span></span></button>
+        </div>
+        <div class="power-hint" id="shortcutHint"><span id="shortcutKeys"></span><span>turns it on from any page</span></div>
+      </section>
+
+      <div class="modes" role="group" aria-label="Mode">
+        <button class="mode" data-mode="inspect" aria-pressed="true"><svg width="18" height="18"><use href="#i-inspect"/></svg>Inspect</button>
+        <button class="mode" data-mode="measure" aria-pressed="false"><svg width="18" height="18"><use href="#i-measure"/></svg>Measure<span class="new pink">NEW</span></button>
+        <button class="mode" data-mode="audit" aria-pressed="false"><svg width="18" height="18"><use href="#i-audit"/></svg>Audit<span class="new orange">NEW</span></button>
+      </div>
+
+      <div class="group">
+        <div class="label">Show on page</div>
+        <div class="chips">
+          <button class="chip" data-setting="showMargin" aria-pressed="true"><span class="sw" data-color="margin"></span>Margin</button>
+          <button class="chip" data-setting="showBorder" aria-pressed="true"><span class="sw" data-color="border"></span>Border</button>
+          <button class="chip" data-setting="showPadding" aria-pressed="true"><span class="sw" data-color="padding"></span>Padding</button>
+          <button class="chip" data-setting="showContent" aria-pressed="false"><span class="sw" data-color="content"></span>Content</button>
+          <button class="chip" data-setting="showGap" aria-pressed="true"><span class="sw hatch" data-color="gap"></span>Gap</button>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="group">
+          <div class="label" id="unitsLabel">Units</div>
+          <div class="seg" role="group" aria-labelledby="unitsLabel" data-seg="units">
+            <button class="mono" data-value="px">px</button>
+            <button class="mono" data-value="rem">rem</button>
+            <button class="mono" data-value="tw" title="Tailwind">tw</button>
+          </div>
+        </div>
+        <div class="group">
+          <div class="label" id="gridLabel">Grid overlay</div>
+          <div class="seg" role="group" aria-labelledby="gridLabel" data-seg="gridOverlay">
+            <button data-value="0">Off</button>
+            <button class="mono" data-value="4">4</button>
+            <button class="mono" data-value="8">8</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="card list">
+        <div class="list-row">
+          <div class="grow"><div class="row-title">Labels on page</div><div class="row-sub">Values on all four sides</div></div>
+          <button class="switch" data-setting="showLabels" role="switch" aria-checked="true" aria-label="Labels on page"><span></span></button>
+        </div>
+        <div class="list-row">
+          <div class="grow"><div class="row-title">Pin on click</div><div class="row-sub">Click locks the element · Esc releases</div></div>
+          <button class="switch" data-setting="pinOnClick" role="switch" aria-checked="true" aria-label="Pin on click"><span></span></button>
+        </div>
+      </section>
+
+      <span class="grow"></span>
+
+      <section class="last" id="lastCard" hidden>
+        <div class="grow min0">
+          <div class="last-label">Last inspected</div>
+          <div class="last-line mono" id="lastLine"></div>
+        </div>
+        <button class="btn small" id="copyLast"><svg width="14" height="14"><use href="#i-copy"/></svg><span id="copyLastText">Copy CSS</span></button>
+      </section>
+    </div>
+  </section>
+
+  <!-- AUDIT ------------------------------------------------------------ -->
+  <section class="view" id="view-audit" hidden>
+    <header class="top">
+      <button class="icon-btn" data-go="home" aria-label="Back"><svg width="18" height="18"><use href="#i-back"/></svg></button>
+      <svg class="logo" width="28" height="28"><use href="#i-logo"/></svg>
+      <h1>Spacing Inspector</h1>
+      <span class="ver">2.0</span>
+      <span class="grow"></span>
+      <button class="icon-btn" id="rescan" aria-label="Re-scan page" title="Re-scan page"><svg width="18" height="18"><use href="#i-rescan"/></svg></button>
+    </header>
+    <div class="body audit-body">
+      <div class="seg wide" role="group" aria-label="Mode">
+        <button data-mode="inspect">Inspect</button>
+        <button data-mode="measure">Measure</button>
+        <button data-mode="audit" aria-pressed="true">Audit</button>
+      </div>
+
+      <div id="auditMessage" class="message" hidden></div>
+
+      <div id="auditContent" class="stack">
+        <section class="card score-card">
+          <div class="ring">
+            <svg width="84" height="84" viewBox="0 0 84 84" role="img" id="scoreRing" aria-label="Spacing score">
+              <circle cx="42" cy="42" r="34" fill="none" class="ring-track" stroke-width="8"/>
+              <circle cx="42" cy="42" r="34" fill="none" id="scoreArc" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 213.6" transform="rotate(-90 42 42)"/>
+            </svg>
+            <div class="ring-num"><b id="scoreNum">–</b><span>/ 100</span></div>
+          </div>
+          <div class="grow">
+            <div class="label">Spacing score</div>
+            <div class="score-label" id="scoreLabel">Scanning…</div>
+            <div class="stats">
+              <div><span class="mono strong" id="statScanned">–</span> scanned</div>
+              <div><span class="mono good" id="statOnGrid">–</span> on grid</div>
+              <div><span class="mono warn" id="statOff">–</span> to fix</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card hist-card">
+          <div class="hist-head">
+            <div class="grow strong">Detected spacing scale</div>
+            <span class="tiny">grid</span>
+            <div class="seg tiny-seg" role="group" aria-label="Grid base" data-seg="auditBase">
+              <button data-value="auto">Auto</button>
+              <button class="mono" data-value="4">4</button>
+              <button class="mono" data-value="8">8</button>
+            </div>
+          </div>
+          <div class="bars" id="bars"></div>
+          <div class="bar-labels mono" id="barLabels"></div>
+          <div class="legend" id="legend"></div>
+        </section>
+
+        <section class="stack tight">
+          <div class="fix-head"><div class="label grow">Fix first</div><button class="link" id="seeAll">See all</button></div>
+          <div class="card list" id="topIssues"></div>
+        </section>
+
+        <span class="grow"></span>
+
+        <div class="actions">
+          <button class="btn primary grow" id="highlight">Highlight issues on page</button>
+          <button class="btn" id="copyFixes">Copy fixes</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZE -------------------------------------------------------- -->
+  <section class="view" id="view-customize" hidden>
+    <header class="top">
+      <button class="icon-btn" data-go="home" aria-label="Back"><svg width="18" height="18"><use href="#i-back"/></svg></button>
+      <h1>Customize</h1>
+      <span class="saved grow" id="saved"><svg width="13" height="13"><use href="#i-check"/></svg>Saved</span>
+      <button class="link muted" id="reset"><svg width="14" height="14"><use href="#i-reset"/></svg>Reset</button>
+    </header>
+    <div class="body">
+      <div class="group">
+        <div class="label">Color preset</div>
+        <div class="presets" id="presets"></div>
+      </div>
+      <div class="group">
+        <div class="label">Layer colors</div>
+        <div class="card list colors" id="colors"></div>
+      </div>
+      <div class="group">
+        <div class="label-row"><label class="label" for="opacity">Overlay opacity</label><span class="mono" id="opacityValue">30%</span></div>
+        <input type="range" id="opacity" min="10" max="80" step="5">
+      </div>
+      <div class="pair">
+        <div class="group grow">
+          <div class="label" id="themeLabel">Panel theme</div>
+          <div class="seg" role="group" aria-labelledby="themeLabel" data-seg="theme">
+            <button data-value="auto">Auto</button>
+            <button data-value="dark">Dark</button>
+            <button data-value="light">Light</button>
+          </div>
+        </div>
+        <div class="group rem">
+          <label class="label" for="remBase">1rem =</label>
+          <div class="field"><input id="remBase" type="number" min="8" max="32" class="mono"><span class="mono">px</span></div>
+        </div>
+      </div>
+      <section class="card list">
+        <div class="list-row">
+          <div class="grow"><div class="row-title">Toolbar on the page</div><div class="row-sub">Switch modes without opening this popup</div></div>
+          <button class="switch" data-setting="showDock" role="switch" aria-checked="true" aria-label="Toolbar on the page"><span></span></button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- SHORTCUTS -------------------------------------------------------- -->
+  <section class="view" id="view-shortcuts" hidden>
+    <header class="top">
+      <button class="icon-btn" data-go="home" aria-label="Back"><svg width="18" height="18"><use href="#i-back"/></svg></button>
+      <h1 class="grow">Keyboard shortcuts</h1>
+    </header>
+    <div class="body">
+      <section class="card list keys">
+        <div class="list-row"><span class="grow">Turn on / off (any page)</span><span id="toggleKeys" class="keyset"></span></div>
+        <div class="list-row"><span class="grow">Inspect · Measure · Audit</span><span class="keyset"><kbd>I</kbd><kbd>M</kbd><kbd>A</kbd></span></div>
+        <div class="list-row"><span class="grow">Measure while inspecting (hold)</span><span class="keyset"><kbd>Alt</kbd></span></div>
+        <div class="list-row"><span class="grow">Pin / unpin element</span><span class="keyset"><kbd>P</kbd></span></div>
+        <div class="list-row"><span class="grow">Parent · child</span><span class="keyset"><kbd>↑</kbd><kbd>↓</kbd></span></div>
+        <div class="list-row"><span class="grow">Previous · next sibling</span><span class="keyset"><kbd>←</kbd><kbd>→</kbd></span></div>
+        <div class="list-row"><span class="grow">Copy as CSS / Tailwind</span><span class="keyset"><kbd>C</kbd></span></div>
+        <div class="list-row"><span class="grow">Copy measurement</span><span class="keyset"><kbd>Shift</kbd><kbd>C</kbd></span></div>
+        <div class="list-row"><span class="grow">Grid overlay · units</span><span class="keyset"><kbd>G</kbd><kbd>U</kbd></span></div>
+        <div class="list-row"><span class="grow">Step back · turn off</span><span class="keyset"><kbd>Esc</kbd></span></div>
+      </section>
+      <span class="grow"></span>
+      <button class="btn" id="changeShortcut">Change the on/off shortcut</button>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEW ------------------------------------------------------- -->
+  <section class="view" id="view-whatsnew" hidden>
+    <div class="hero">
+      <button class="icon-btn hero-close" id="closeNew" aria-label="Close"><svg width="16" height="16"><use href="#i-close"/></svg></button>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-box"><div></div></div>
+        <div class="art-target"></div>
+        <div class="art-line"></div><div class="art-cap a"></div><div class="art-cap b"></div>
+        <div class="art-val mono">24</div>
+        <div class="art-score"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" class="ring-track" stroke-width="4"/><circle cx="18" cy="18" r="14" fill="none" stroke="#34D399" stroke-width="4" stroke-linecap="round" stroke-dasharray="76.5 88" transform="rotate(-90 18 18)"/></svg><div><b>87</b><span>Spacing score</span></div></div>
+        <div class="art-tw mono"><span class="k-m">mt-8</span><span class="k-p">px-7</span><span class="k-p">py-3.5</span></div>
+      </div>
+    </div>
+    <div class="body">
+      <div>
+        <div class="eyebrow">New in 2.0</div>
+        <h2 class="headline">Measure, audit and copy spacing, right on the page.</h2>
+      </div>
+      <div class="features">
+        <div class="feature"><span class="ficon pink"><svg width="18" height="18"><use href="#i-measure"/></svg></span><div><div class="ftitle">Measure anything</div><div class="fsub">Hold <kbd>Alt</kbd> and hover: see the exact distance between any two elements, like in Figma.</div></div></div>
+        <div class="feature"><span class="ficon orange"><svg width="18" height="18"><use href="#i-audit"/></svg></span><div><div class="ftitle">Spacing Audit</div><div class="fsub">Score any page's spacing rhythm, see its real spacing scale and every off-grid value.</div></div></div>
+        <div class="feature"><span class="ficon blue"><svg width="18" height="18"><use href="#i-code"/></svg></span><div><div class="ftitle">Copy as CSS or Tailwind</div><div class="fsub">Press <kbd>C</kbd> on any element to copy its spacing as code.</div></div></div>
+      </div>
+      <p class="also">Also new: border and gap layers, arrow keys to walk up and down the DOM, and a toolbar right on the page.</p>
+      <span class="grow"></span>
+      <div class="stack tight center">
+        <button class="btn primary big" id="tryIt">Try it on this page</button>
+        <a class="link" href="https://spacinginspector.netlify.app/" target="_blank" rel="noopener">Visit the website</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="../lib/core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,84 +1,84 @@
-// Background service worker for Spacing Inspector
-chrome.runtime.onInstalled.addListener(() => {
-  console.log('Spacing Inspector extension installed');
-  
-  // Set default settings
-  chrome.storage.sync.set({
-    inspectorEnabled: false,
-    showValues: true,
-    colorHighlights: true,
-    stickyMode: false,
-    marginColor: '#3b82f6',
-    paddingColor: '#10b981',
-    opacity: 0.3
-  });
+// Spacing Inspector 2.0 service worker: settings migration, per-tab state,
+// the keyboard command and the toolbar badge.
+importScripts('lib/core.js');
+
+const Core = self.SpacingCore;
+const CONTENT_FILES = ['lib/core.js', 'content/inspector.js'];
+
+chrome.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
+  const raw = await chrome.storage.sync.get(null);
+  // Never overwrite what users chose: migrate v1 keys or fill in missing defaults.
+  const settings = raw.settingsVersion === 2 ? Core.normalizeSettings(raw) : Core.migrateV1(raw);
+  await chrome.storage.sync.remove(['inspectorEnabled', 'showValues', 'colorHighlights', 'stickyMode', 'marginColor', 'paddingColor']);
+  await chrome.storage.sync.set(settings);
+
+  if (reason === 'update' && previousVersion && previousVersion.startsWith('1.')) {
+    await chrome.storage.local.set({ showWhatsNew: true });
+  }
 });
 
-// Listen for messages from popup
+function tabKey(tabId) {
+  return `tab:${tabId}`;
+}
+
+async function getTabState(tabId) {
+  const key = tabKey(tabId);
+  const data = await chrome.storage.session.get(key);
+  return data[key] || { enabled: false, mode: 'inspect' };
+}
+
+async function setTabState(tabId, state) {
+  await chrome.storage.session.set({ [tabKey(tabId)]: { enabled: !!state.enabled, mode: state.mode || 'inspect' } });
+  await updateBadge(tabId, state.enabled);
+}
+
+async function updateBadge(tabId, enabled) {
+  try {
+    await chrome.action.setBadgeBackgroundColor({ tabId, color: '#6E5CF6' });
+    await chrome.action.setBadgeText({ tabId, text: enabled ? 'ON' : '' });
+  } catch (e) {
+    // The tab may have closed in the meantime.
+  }
+}
+
+// Send a message to the page, injecting the content script first if this tab
+// was open before the extension was installed or updated.
+async function sendToTab(tabId, message) {
+  try {
+    return await chrome.tabs.sendMessage(tabId, message);
+  } catch (e) {
+    await chrome.scripting.executeScript({ target: { tabId }, files: CONTENT_FILES });
+    return chrome.tabs.sendMessage(tabId, message);
+  }
+}
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'toggleInspector') {
-    // Get current active tab and inject content script
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]) {
-        // Update tab's URL to trigger content script injection
-        chrome.tabs.sendMessage(tabs[0].id, {
-          action: 'toggleInspector',
-          enabled: message.enabled
-        }).catch(() => {
-          // If content script isn't loaded yet, we'll handle it in the popup
-          console.log('Content script not ready, will be loaded on next activation');
-        });
-      }
+  const tabId = sender.tab && sender.tab.id;
+  if (message.type === 'hello' && tabId !== undefined) {
+    getTabState(tabId).then((state) => {
+      updateBadge(tabId, state.enabled);
+      sendResponse(state);
     });
+    return true;
   }
-  
-  if (message.action === 'updateSettings') {
-    // Update settings and notify all tabs
-    chrome.storage.sync.set(message.settings, () => {
-      chrome.tabs.query({}, (tabs) => {
-        tabs.forEach(tab => {
-          chrome.tabs.sendMessage(tab.id, {
-            action: 'updateSettings',
-            settings: message.settings
-          }).catch(() => {
-            // Tab might not have content script loaded
-          });
-        });
-      });
-    });
+  if (message.type === 'tabState' && tabId !== undefined) {
+    setTabState(tabId, message).then(() => sendResponse({ ok: true }));
+    return true;
   }
-  
-  return true;
+  return false;
 });
 
-// Background service worker for Spacing Inspector
-chrome.runtime.onInstalled.addListener(() => {
-  console.log('Spacing Inspector extension installed');
-  
-  // Set default settings
-  chrome.storage.sync.set({
-    inspectorEnabled: false,
-    showValues: true,
-    colorHighlights: true,
-    stickyMode: false,
-    marginColor: '#3b82f6',
-    paddingColor: '#10b981',
-    opacity: 0.3
-  });
+chrome.commands.onCommand.addListener(async (command, tab) => {
+  if (command !== 'toggle-inspector') return;
+  if (!tab) [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab || tab.id === undefined) return;
+  try {
+    await sendToTab(tab.id, { type: 'toggle' });
+  } catch (e) {
+    // Restricted page (chrome://, Web Store, PDF viewer): nothing we can do.
+  }
 });
 
-// Listen for messages from popup or content script
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  // Forward messages between popup and content scripts if needed
-  if (message.action === 'forwardToTabs') {
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach(tab => {
-        chrome.tabs.sendMessage(tab.id, message.data).catch(() => {
-          // Tab might not have content script loaded
-        });
-      });
-    });
-  }
-  
-  return true;
+chrome.tabs.onRemoved.addListener((tabId) => {
+  chrome.storage.session.remove(tabKey(tabId));
 });

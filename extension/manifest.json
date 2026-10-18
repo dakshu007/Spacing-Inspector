@@ -1,13 +1,14 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
   "manifest_version": 3,
   "name": "Spacing Inspector",
-  "version": "1.0.0",
-  "description": "Visualize CSS margins and padding on webpages",
-  "permissions": ["activeTab", "storage"],
+  "version": "2.0.0",
+  "description": "See margin, padding, border and gaps on any page. Measure distances, audit spacing and copy as CSS or Tailwind.",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_title": "Spacing Inspector",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -16,12 +17,23 @@
       "128": "icons/icon128.png"
     }
   },
+  "commands": {
+    "toggle-inspector": {
+      "suggested_key": { "default": "Alt+Shift+S" },
+      "description": "Turn Spacing Inspector on or off for this page"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["assets/styles.css"],
+      "js": ["lib/core.js", "content/inspector.js"],
       "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/Geist-Variable.woff2", "fonts/GeistMono-Variable.woff2"],
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
