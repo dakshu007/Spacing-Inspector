@@ -1,0 +1,40 @@
+/* Spacing Inspector Styles */
+#spacing-inspector-overlay * {
+    box-sizing: border-box;
+}
+
+.spacing-label {
+    animation: fadeIn 0.2s ease-out;
+}
+
+.spacing-dimensions {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.spacing-margin {
+    animation: pulseMargin 2s infinite alternate;
+}
+
+.spacing-padding {
+    animation: pulsePadding 2s infinite alternate;
+}
+
+@keyframes pulseMargin {
+    0% { border-color: rgba(59, 130, 246, 0.7); }
+    100% { border-color: rgba(59, 130, 246, 1); }
+}
+
+@keyframes pulsePadding {
+    0% { border-color: rgba(16, 185, 129, 0.7); }
+    100% { border-color: rgba(16, 185, 129, 1); }
+}

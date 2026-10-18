@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacing Inspector</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <div class="box-model-icon">
+                        <div class="margin"></div>
+                        <div class="padding"></div>
+                        <div class="content"></div>
+                    </div>
+                </div>
+                <h1>Spacing Inspector</h1>
+            </div>
+            <p class="subtitle">Visualize margins & padding on any webpage</p>
+        </header>
+
+        <main class="main">
+            <div class="toggle-section">
+                <div class="toggle-header">
+                    <h3><i class="icon-toggle"></i> Inspector</h3>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleInspector">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <p class="toggle-description">Toggle the inspector on/off for the current page</p>
+            </div>
+
+            <div class="settings-section">
+                <h3><i class="icon-settings"></i> Display Settings</h3>
+                
+                <div class="setting">
+                    <div class="setting-info">
+                        <span class="setting-label">Show Values</span>
+                        <span class="setting-description">Display pixel measurements</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="showValues" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting">
+                    <div class="setting-info">
+                        <span class="setting-label">Color Highlights</span>
+                        <span class="setting-description">Use colored overlays</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="colorHighlights" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting">
+                    <div class="setting-info">
+                        <span class="setting-label">Sticky Mode</span>
+                        <span class="setting-description">Lock element on click (ESC to exit)</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="stickyMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="color-settings">
+                <h3><i class="icon-palette"></i> Colors</h3>
+                <div class="color-pickers">
+                    <div class="color-picker">
+                        <label>Margin</label>
+                        <input type="color" id="marginColor" value="#3b82f6">
+                    </div>
+                    <div class="color-picker">
+                        <label>Padding</label>
+                        <input type="color" id="paddingColor" value="#10b981">
+                    </div>
+                </div>
+            </div>
+
+            <div class="opacity-section">
+                <h3><i class="icon-opacity"></i> Overlay Opacity</h3>
+                <div class="slider-container">
+                    <input type="range" min="10" max="80" value="30" class="slider" id="opacitySlider">
+                    <div class="slider-value" id="opacityValue">30%</div>
+                </div>
+            </div>
+
+            <div class="shortcuts">
+                <h3><i class="icon-keyboard"></i> Keyboard Shortcuts</h3>
+                <div class="shortcut-item">
+                    <kbd>Click</kbd>
+                    <span>Lock element (sticky mode)</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>ESC</kbd>
+                    <span>Exit sticky mode</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Hover</kbd>
+                    <span>Inspect any element</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="status" id="statusMessage">
+                Ready to inspect
+            </div>
+            <button id="resetButton" class="reset-btn">
+                <i class="icon-reset"></i> Reset to Defaults
+            </button>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
