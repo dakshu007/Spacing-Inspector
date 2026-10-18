@@ -1,7 +1,7 @@
 // Post-build: the page is fully rendered at build time and client/enhance.ts
 // handles all interaction, so strip the Next.js/React runtime and RSC payload
 // from the exported HTML. Visitors get plain HTML + CSS and a 4 KB module.
-import { readdir, readFile, writeFile, rm, rmdir } from 'node:fs/promises';
+import { readdir, readFile, writeFile, rm, rmdir, mkdir, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -40,6 +40,15 @@ for (const dir of ['_next', '_next/static']) {
   for (const e of await readdir(join(out, dir), { withFileTypes: true })) {
     if (e.isDirectory() && !['static', 'media'].includes(e.name)) await rm(join(out, dir, e.name), { recursive: true, force: true });
   }
+}
+
+// Serve every page from a folder too (privacy.html -> privacy/index.html), so
+// /privacy works on any static host, not only ones that map /page to page.html.
+for (const e of await readdir(out, { withFileTypes: true })) {
+  const name = e.name.replace(/\.html$/, '');
+  if (!e.isFile() || !e.name.endsWith('.html') || ['index', '404', '_not-found'].includes(name)) continue;
+  await mkdir(join(out, name), { recursive: true });
+  await copyFile(join(out, e.name), join(out, name, 'index.html'));
 }
 
 // Drop folders the RSC cleanup left empty.
