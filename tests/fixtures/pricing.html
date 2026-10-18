@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lumen pricing (test page)</title>
+<style>
+  body { margin: 0; font-family: Georgia, serif; background: #FBFAF8; color: #17171A; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 80px; height: 64px; border-bottom: 1px solid #ECEAE6; }
+  nav .links { display: flex; gap: 18px; font-size: 14px; color: #55565C; }
+  .logo { font-weight: 700; font-size: 18px; }
+  .signin { padding: 8px 16px; border: 1px solid #D6D3CE; border-radius: 9px; }
+  .hero { max-width: 720px; margin: 0 auto; padding: 48px 0 64px; text-align: center; }
+  .eyebrow { display: inline-block; padding: 4px 14px; border-radius: 14px; background: #F0EEEA; font-size: 13px; color: #55565C; margin-bottom: 22px; }
+  h1 { font-size: 52px; line-height: 58px; margin: 0 0 24px; letter-spacing: -0.03em; }
+  .subtitle { font-size: 18px; line-height: 28px; color: #55565C; margin: 0 auto; max-width: 600px; }
+  .actions { display: flex; justify-content: center; gap: 12px; margin-top: 32px; }
+  .btn { display: inline-flex; align-items: center; padding: 14px 28px; border-radius: 10px; font-weight: 600; border: 1px solid #17171A; text-decoration: none; }
+  .btn-primary { background: #17171A; color: #fff; }
+  .btn-secondary { padding: 13px 28px; border-color: #D6D3CE; color: #17171A; }
+  .plans { display: grid; grid-template-columns: repeat(3, 320px); gap: 24px; justify-content: center; padding-bottom: 80px; }
+  .plan-card { background: #fff; border: 1px solid #ECEAE6; border-radius: 16px; padding: 32px; }
+  .plan-card.first { padding: 30px; }
+  .plan-card h3 { margin: 0 0 8px; font-size: 15px; }
+  .price { font-size: 40px; margin: 0 0 12px; }
+  .card-body { padding: 13px; background: #F7F6F3; border-radius: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+  <nav><span class="logo">Lumen</span><div class="links"><a>Product</a><a>Pricing</a><a>Docs</a><a>Changelog</a></div><a class="signin">Sign in</a></nav>
+  <section class="hero">
+    <span class="eyebrow">New · Usage-based pricing</span>
+    <h1>Pricing that scales with your team</h1>
+    <p class="subtitle">Start free. Upgrade when you need more seats, more projects or priority support.</p>
+    <div class="actions"><a class="btn btn-primary" href="#start" id="start">Start free trial</a><a class="btn btn-secondary" href="#sales">Talk to sales</a></div>
+  </section>
+  <section class="plans">
+    <div class="plan-card first"><h3>Starter</h3><p class="price">$0</p><div class="card-body">For side projects.</div></div>
+    <div class="plan-card"><h3>Team</h3><p class="price">$12</p><div class="card-body">For growing teams.</div></div>
+    <div class="plan-card"><h3>Business</h3><p class="price">$29</p><div class="card-body">SSO and audit logs.</div></div>
+  </section>
+  <svg width="20" height="20" class="icon"><circle cx="10" cy="10" r="8"/></svg>
+</body>
+</html>
