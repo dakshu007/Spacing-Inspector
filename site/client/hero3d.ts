@@ -27,7 +27,7 @@ const LAYERS: LayerDef[] = [
   { w: 6.6, h: 4.4, color: '#4C8DFF', opacity: 0.16, label: 'margin 32' },
   { w: 5.4, h: 3.3, color: '#F2C94C', opacity: 0.1, label: 'border 1' },
   { w: 5.1, h: 3.0, color: '#34D399', opacity: 0.2, label: 'padding 24' },
-  { w: 3.7, h: 1.6, color: '#EDEBFF', opacity: 0.95, label: '320 × 48', solid: true }
+  { w: 3.7, h: 1.6, color: '#E3F8FA', opacity: 0.95, label: '320 × 48', solid: true }
 ];
 
 function labelTexture(text: string, color: string) {
@@ -54,9 +54,9 @@ function buttonTexture() {
   c.width = 512;
   c.height = 224;
   const g = c.getContext('2d')!;
-  g.fillStyle = '#EDEBFF';
+  g.fillStyle = '#E3F8FA';
   g.fillRect(0, 0, 512, 224);
-  g.fillStyle = '#0B0A14';
+  g.fillStyle = '#061114';
   g.beginPath();
   g.roundRect(56, 56, 400, 112, 28);
   g.fill();
@@ -87,7 +87,7 @@ export function mountHero3D(container: HTMLElement) {
   const key = new DirectionalLight(0xffffff, 1.6);
   key.position.set(4, 6, 8);
   scene.add(key);
-  const glow = new PointLight(new Color('#8B7CFF'), 30, 30);
+  const glow = new PointLight(new Color('#0FC0D6'), 30, 30);
   glow.position.set(-4, -3, 4);
   scene.add(glow);
 
@@ -113,7 +113,7 @@ export function mountHero3D(container: HTMLElement) {
     const edges = new LineSegments(new EdgesGeometry(geo, 30), new LineBasicMaterial({ color: def.color, transparent: true, opacity: def.solid ? 0.6 : 0.95 }));
     layer.add(mesh, edges);
 
-    const label = new Sprite(new SpriteMaterial({ map: labelTexture(def.label, def.color === '#EDEBFF' ? '#C4BCFF' : def.color), depthTest: false }));
+    const label = new Sprite(new SpriteMaterial({ map: labelTexture(def.label, def.color === '#E3F8FA' ? '#9BE9F2' : def.color), depthTest: false }));
     label.scale.set(1.6, 0.4, 1);
     label.position.set(-def.w / 2 + 0.9, def.h / 2 + 0.05, 0.1);
     label.renderOrder = 10 + i;

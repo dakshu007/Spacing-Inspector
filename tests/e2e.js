@@ -71,7 +71,12 @@ async function main() {
 
     // ---- Inspect ----
     await toTab({ type: 'setState', enabled: true, mode: 'inspect' });
-    const badge = await sw.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId);
+    // The badge updates after a message round-trip to the service worker.
+    let badge = '';
+    for (let i = 0; i < 20 && badge !== 'ON'; i++) {
+      badge = await sw.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId);
+      if (badge !== 'ON') await page.waitForTimeout(100);
+    }
     assert.equal(badge, 'ON', 'badge shows ON');
     const btn = await page.locator('#start').boundingBox();
     await page.mouse.move(btn.x + btn.width / 2, btn.y + btn.height / 2);

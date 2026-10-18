@@ -23,6 +23,7 @@
     "@types/three": "0.180.0",
     "esbuild": "^0.25.10",
     "lighthouse": "13.5.0",
+    "simple-icons": "^16.30.0",
     "terser": "5.44.0",
     "typescript": "5.9.3"
   }

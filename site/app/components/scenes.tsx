@@ -96,7 +96,7 @@ export function MeasureScene() {
       <div className="pcard" style={box(80, 268, 220, 96)} />
       <div className="pcard" style={box(340, 268, 220, 96)} />
       <div className="out-a a in16" style={box(80, 64, 480, 52)} />
-      <div className="tag violet a in16" style={at(80, 40)}>
+      <div className="tag brand a in16" style={at(80, 40)}>
         h2.title · 480 × 52
       </div>
       <div className="out-b a in36" style={box(220, 176, 200, 44)} />

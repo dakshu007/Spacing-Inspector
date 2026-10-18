@@ -24,18 +24,8 @@ import {
 import { FAQ, FEATURES, SEO, SITE_URL, STEPS, STORE_URL, USERS } from './content';
 import { AuditScene, CopyScene, InspectScene, MeasureScene } from './components/scenes';
 import { Player } from './components/player';
-
-function Logo({ size = 32 }: { size?: number }) {
-  return (
-    <span className="mark" style={{ width: size, height: size }} aria-hidden="true">
-      <svg viewBox="0 0 28 28" width={size * 0.62} height={size * 0.62} fill="none">
-        <rect x="1.5" y="1.5" width="25" height="25" rx="6" stroke="#fff" strokeOpacity=".7" strokeWidth="2" strokeDasharray="3 2.4" />
-        <rect x="6" y="6" width="16" height="16" rx="4" stroke="#fff" strokeWidth="2" />
-        <rect x="10.5" y="10.5" width="7" height="7" rx="1.6" fill="#fff" />
-      </svg>
-    </span>
-  );
-}
+import { Logo } from './components/logo';
+import { BrandMarquee } from './components/brands';
 
 function StoreButton({ placement, size = 'lg' }: { placement: string; size?: 'md' | 'lg' }) {
   return (
@@ -53,7 +43,6 @@ const NAV = [
   ['#faq', 'FAQ']
 ];
 
-const MARQUEE = ['React', 'Next.js', 'Vue', 'Svelte', 'Angular', 'Tailwind CSS', 'WordPress', 'Shopify', 'Webflow', 'Framer', 'Astro', 'Bootstrap'];
 
 const KEYS = [
   ['I', 'Inspect'],
@@ -239,18 +228,7 @@ export default function Page() {
         {/* MARQUEE */}
         <section className="marquee" aria-label="Works on every website, whatever it is built with">
           <p className="marquee-label">Works on every site, whatever it’s built with</p>
-          <div className="marquee-track">
-            <ul className="marquee-list">
-              {MARQUEE.map((m) => (
-                <li key={m}>{m}</li>
-              ))}
-            </ul>
-            <ul className="marquee-list" aria-hidden="true">
-              {MARQUEE.map((m) => (
-                <li key={m}>{m}</li>
-              ))}
-            </ul>
-          </div>
+          <BrandMarquee />
         </section>
 
         {/* WHAT IS */}
@@ -409,7 +387,7 @@ export default function Page() {
         <section className="section" id="keys" aria-labelledby="keys-title">
           <div className="wrap keys-grid">
             <div className="keys-text">
-              <span className="f-icon i-violet">
+              <span className="f-icon i-brand">
                 <Keyboard size={20} aria-hidden="true" />
               </span>
               <h2 id="keys-title">
