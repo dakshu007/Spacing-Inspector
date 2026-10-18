@@ -71,9 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
         <script type="module" src={client.enhance} />
-        {/* Analytics: paste the embed code here (inside <head>) when it's ready. */}
+        {/* Analytics (GA4, Tag Manager, Clarity) load from client/analytics.ts on first interaction. */}
       </head>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K977KWP4" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} title="Google Tag Manager" />
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }

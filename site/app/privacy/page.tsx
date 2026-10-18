@@ -20,7 +20,7 @@ export default function Privacy() {
             <span className="brand-word">Spacing Inspector</span>
           </a>
           <div className="nav-end">
-            <a className="btn btn-primary md" href={STORE_URL}>
+            <a className="btn btn-primary md" href={STORE_URL} data-cta="privacy">
               Add to Chrome
             </a>
           </div>
@@ -83,9 +83,15 @@ export default function Privacy() {
 
         <h2>This website</h2>
         <p>
-          This website (spacinginspector.netlify.app) is a static page. If we add analytics to it, such as Google Analytics, they only measure visits to this site;
-          they are not part of the extension and never see what you do with it.
+          This website (spacinginspector.netlify.app) is separate from the extension. To understand how many people visit and which pages help them, it uses Google
+          Analytics and Google Tag Manager (Google) and Microsoft Clarity (Microsoft). These services may set cookies and collect usage data such as pages viewed,
+          clicks, scrolling, device and browser type and an approximate location based on your IP address; Clarity can also record anonymized sessions of how the
+          page is used. They load only after you interact with the page. See{' '}
+          <a href="https://policies.google.com/privacy">Google’s privacy policy</a> and the{' '}
+          <a href="https://privacy.microsoft.com/privacystatement">Microsoft privacy statement</a>. You can block them with your browser’s tracking protection or
+          an ad blocker; the site and the extension keep working.
         </p>
+        <p>None of this applies to the extension: website analytics never see what you inspect or do with Spacing Inspector.</p>
 
         <h2>Children</h2>
         <p>Spacing Inspector is a developer tool and is not directed at children. It collects no personal data from anyone.</p>

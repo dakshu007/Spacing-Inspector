@@ -2,6 +2,8 @@
 // build time) and this small module adds behaviour on top, so the page never
 // pays for hydration. three.js, Lenis and the live demo load on demand.
 
+import { setupAnalytics } from './analytics';
+
 type DemoState = { enabled: boolean; mode: string };
 type Demo = { send: (msg: object) => DemoState | null; onState: (fn: (s: DemoState) => void) => void };
 declare global {
@@ -154,8 +156,28 @@ window.addEventListener('keyup', (e) => {
 });
 $$('[data-demo]').forEach((b) => b.addEventListener('click', () => startDemo(b.dataset.demo || 'inspect')));
 
-// ---- analytics hook for the store buttons ----
-$$('[data-cta]').forEach((a) => a.addEventListener('click', () => window.gtag?.('event', 'add_to_chrome', { placement: a.dataset.cta })));
+// ---- analytics (GA4, Tag Manager, Clarity), plus an event for store clicks ----
+setupAnalytics();
+$$<HTMLAnchorElement>('a[data-cta]').forEach((a) =>
+  a.addEventListener('click', (e) => {
+    const params = { placement: a.dataset.cta };
+    // New-tab clicks keep this page open, so the event has time to send.
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') {
+      window.gtag?.('event', 'add_to_chrome', params);
+      return;
+    }
+    // Same-tab: wait for GA to record the click (at most 800ms), then go.
+    e.preventDefault();
+    let gone = false;
+    const go = () => {
+      if (gone) return;
+      gone = true;
+      location.href = a.href;
+    };
+    window.gtag?.('event', 'add_to_chrome', { ...params, event_callback: go, event_timeout: 800 });
+    setTimeout(go, 800);
+  })
+);
 
 // ---- smooth scrolling (Lenis), after the page has settled ----
 // Lenis only smooths wheel scrolling; touch devices keep native momentum.

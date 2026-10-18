@@ -82,7 +82,7 @@ React renders the whole page at build time. `scripts/static-html.mjs` then strip
 - **Spacing:** the page passes its own Spacing Audit with a score of 100. Every margin, padding and gap is 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96 or 128px. `npm run test:site` fails if that slips.
 - **SEO and AI search:** the title, description and keywords live in `site/app/content.ts`. The site also has JSON-LD (Organization, WebSite, SoftwareApplication, HowTo, FAQPage), `llms.txt` and `llms-full.txt`, a robots.txt that welcomes AI crawlers, a sitemap and an Open Graph image.
 - **Fonts:** fonts are self-hosted and subset with `site/scripts/subset-fonts.sh`.
-- **Analytics:** paste the embed code where the comment in `site/app/layout.tsx` (inside `<head>`) says to. Each "Add to Chrome" click calls `gtag('event', 'add_to_chrome', { placement })` when gtag is present.
+- **Analytics:** Google Tag Manager (`GTM-K977KWP4`), Google Analytics 4 (`G-916SQC2VYS`) and Microsoft Clarity (`vk0e2c0vmi`) are set up in `site/client/analytics.ts`. Their queues start immediately, but the scripts load on the visitor's first interaction, which keeps page load fast. Each "Add to Chrome" click sends an `add_to_chrome` event with its placement. The Search Console verification tag is in `site/app/layout.tsx`.
 - **Run locally:** `cd site && npm install && npm run build && npm start`, then open http://localhost:4173. Use `npm run dev` while editing.
 - **Deploy:** connect the repo to Netlify. `netlify.toml` builds `site/` and publishes `site/out`.
 
