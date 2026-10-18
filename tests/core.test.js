@@ -139,11 +139,3 @@ test('readable text picks contrast', () => {
   assert.equal(Core.readableText('#1E1B4B'), '#FFFFFF');
 });
 
-test('website runs the same code as the extension (run scripts/build-site.sh)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const root = path.resolve(__dirname, '..');
-  const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
-  assert.equal(read('website/vendor/core.js'), read('extension/lib/core.js'));
-  assert.ok(read('website/vendor/inspector.js').includes(read('extension/content/inspector.js')));
-});

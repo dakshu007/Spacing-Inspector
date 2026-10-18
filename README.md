@@ -67,18 +67,23 @@ tests/
   core.test.js        unit tests for lib/core.js
   e2e.js              loads the extension in Chromium, drives it on tests/fixtures, saves screenshots
 scripts/build.sh      builds dist/spacing-inspector-<version>.zip
-scripts/build-site.sh syncs extension code into website/
-website/              landing page (runs the real inspector as a live demo)
+site/                 landing page (Next.js static export, runs the real inspector as a live demo)
+netlify.toml          builds and deploys site/
 ```
 
 ## Website
 
-`website/` is the landing page (static, no build step). It runs the real inspector from the extension, so visitors can press `I`, `M` or `A` and inspect the page itself. The page is built to score 100 on its own Spacing Audit: every margin, padding and gap is one of 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96 or 128px. `npm run test:site` fails if that slips.
+`site/` is the landing page: Next.js (App Router, static export), React server components, Lucide icons, Grand Hotel + Lato, Lenis smooth scrolling and a three.js hero. Every section has a CSS motion scene that plays like a short video and pauses off-screen, on request or with reduced motion.
 
-- `npm run site` copies `extension/lib/core.js`, `extension/content/inspector.js` and the fonts into `website/` (rerun after changing them; `npm test` checks they match).
-- `website/demo-shim.js` stands in for the `chrome.*` APIs so the content script runs on a normal page.
-- Deploy: drag `website/` into Netlify, or set the site's base directory to `website`.
-- Keeps the existing Search Console tag, Google Analytics (`G-916SQC2VYS`), Tag Manager (`GTM-K977KWP4`) and Clarity. Each "Add to Chrome" click sends an `add_to_chrome` event with its placement.
+React renders the whole page at build time. `scripts/static-html.mjs` then strips the Next.js runtime from the exported HTML, and `client/enhance.ts` (about 4 KB) adds the interactive parts. Lenis, three.js and the live demo load on demand. The page scores 100 in Lighthouse Performance, Accessibility, Best Practices, SEO and Agentic Browsing on mobile and desktop.
+
+- **Live demo:** visitors press `I`, `M` or `A` and inspect the page itself. `scripts/build-demo.mjs` minifies `extension/lib/core.js` and `extension/content/inspector.js` into `site/public/demo/` at build time, so the demo always matches the extension. `site/demo-src/shim.js` stands in for the `chrome.*` APIs.
+- **Spacing:** the page passes its own Spacing Audit with a score of 100. Every margin, padding and gap is 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96 or 128px. `npm run test:site` fails if that slips.
+- **SEO and AI search:** the title, description and keywords live in `site/app/content.ts`. The site also has JSON-LD (Organization, WebSite, SoftwareApplication, HowTo, FAQPage), `llms.txt` and `llms-full.txt`, a robots.txt that welcomes AI crawlers, a sitemap and an Open Graph image.
+- **Fonts:** fonts are self-hosted and subset with `site/scripts/subset-fonts.sh`.
+- **Analytics:** paste the embed code where the comment in `site/app/layout.tsx` (inside `<head>`) says to. Each "Add to Chrome" click calls `gtag('event', 'add_to_chrome', { placement })` when gtag is present.
+- **Run locally:** `cd site && npm install && npm run build && npm start`, then open http://localhost:4173. Use `npm run dev` while editing.
+- **Deploy:** connect the repo to Netlify. `netlify.toml` builds `site/` and publishes `site/out`.
 
 ## Develop
 
@@ -89,6 +94,7 @@ website/              landing page (runs the real inspector as a live demo)
 npm test            # unit tests (Node 18+)
 npm install         # once, for the end-to-end test
 npm run test:e2e    # loads the extension in Chromium and checks every mode
+npm run site        # builds the landing page into site/out
 npm run test:site   # landing page: no errors, live demo works, scores 100 on its own audit
 npm run build       # dist/spacing-inspector-2.0.0.zip, ready to upload
 ```

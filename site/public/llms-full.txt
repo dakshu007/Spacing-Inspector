@@ -1,0 +1,93 @@
+# Spacing Inspector (full description)
+
+> Spacing Inspector is a free Chrome extension to inspect margin and padding on any website. It visualizes the CSS box model on hover, measures distances between elements, audits a page's spacing grid with a 0 to 100 score, and copies spacing as CSS, rem or Tailwind classes.
+
+Website: https://spacinginspector.netlify.app/
+Install: https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk
+Current version: 2.0.0
+Price: free (no account, no trial, no paid tier)
+Users: 858
+Privacy: runs entirely in the browser and sends no data to any server; settings sync through the user's own Chrome profile
+Browsers: Google Chrome, Microsoft Edge, Brave, Arc and other Chromium browsers that install from the Chrome Web Store
+Works on: any http or https page, including localhost dev servers
+
+## What it does
+
+### Inspect the box model
+
+Turn the inspector on (Alt+Shift+S or the toolbar icon) and hover any element. Spacing Inspector draws:
+
+- margin in blue, with a dashed outline of the margin box
+- border in yellow
+- padding in green
+- the content box (optional)
+- flex and grid gaps as purple stripes
+
+Each side is labelled with its value. An info card next to the element shows its size, display type, parent elements, a box-model diagram and its spacing as code. Click to pin an element, use the arrow keys to move to its parent, first child or siblings, and press Esc to step back. A 4px or 8px grid overlay is available.
+
+### Measure distances
+
+Hold Alt while inspecting, or press M for Measure mode. Click one element, then hover another: pink lines show the distance between them in pixels, or the distance from each edge when one element is inside another. Click to pin measurements and press Shift+C to copy them as a written spec.
+
+### Spacing Audit
+
+Press A. The audit scans every visible element and reads each margin, padding and gap. It detects whether the page uses a 4px or 8px grid (or the user can choose), then:
+
+- scores the page from 0 to 100 based on how many values sit on the grid (multiples of 4 that are not multiples of 8 count as half steps on an 8px grid)
+- shows the page's real spacing scale as a chart
+- lists every off-grid value with a suggested fix, for example "padding 13 → 12", grouped for repeated components
+- copies all fixes as CSS or exports a JSON report
+
+Auto margins (such as margin: 0 auto or margin-top: auto) are ignored.
+
+### Copy as code
+
+Press C on any element to copy its spacing as shorthand CSS (margin: 32px 0 0;), rem values or Tailwind classes (mt-8 py-3.5 px-7 border). Units follow the px, rem or Tailwind setting.
+
+## Keyboard shortcuts
+
+- Alt+Shift+S: turn the inspector on or off (changeable in chrome://extensions/shortcuts)
+- I, M, A: Inspect, Measure, Audit modes
+- hold Alt: measure while inspecting
+- P or click: pin or unpin an element
+- Arrow up / down: parent / first child
+- Arrow left / right: previous / next sibling (in Audit: previous / next issue)
+- C: copy as CSS, rem or Tailwind
+- Shift+C: copy measurements
+- G: cycle the grid overlay (off, 4px, 8px)
+- U: cycle units (px, rem, Tailwind)
+- Esc: step back, then turn off
+
+## How to use it
+
+1. Add Spacing Inspector to Chrome from the Chrome Web Store.
+2. Open any website and press Alt+Shift+S, then hover elements.
+3. Hold Alt to measure between elements, or press A for the spacing score.
+4. Press C to copy CSS or Tailwind, or copy every audit fix at once.
+
+## Spacing Inspector compared with Chrome DevTools
+
+Spacing Inspector shows spacing on hover without clicks, draws margin, padding, border and gap directly on the page with values on all four sides, measures between any two elements, scores a whole page and copies Tailwind classes. Chrome DevTools does not do these, but it offers full DOM inspection and live CSS editing, which Spacing Inspector does not.
+
+## Frequently asked questions
+
+Q: What is Spacing Inspector?
+A: A free Chrome extension that shows margin, border, padding and gaps of any element you hover, with values, plus a measure tool, a spacing audit and copy as CSS or Tailwind.
+
+Q: Is it free?
+A: Yes, every feature is free with no account.
+
+Q: Does it collect data?
+A: No. It runs entirely in the browser.
+
+Q: How do I inspect margin and padding on a website?
+A: Install Spacing Inspector, press Alt+Shift+S on any page and hover an element.
+
+Q: How is the spacing score calculated?
+A: It reads every margin, padding and gap, detects a 4px or 8px grid and scores from 0 to 100 how many values sit on it.
+
+Q: Can it copy Tailwind classes?
+A: Yes, press C to copy spacing as Tailwind classes such as mt-8 py-3.5 px-7.
+
+Q: Does it work on localhost?
+A: Yes, on any http or https page.

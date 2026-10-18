@@ -1,0 +1,30 @@
+# Spacing Inspector
+
+> Spacing Inspector is a free Chrome extension that shows the CSS box model of any element you hover on any website: margin, border, padding, content and flex or grid gaps, each labelled with its pixel value. Version 2.0 adds a Figma-style measure tool, a Spacing Audit that scores a page's spacing from 0 to 100, and one-key copy as CSS, rem or Tailwind classes.
+
+Spacing Inspector is for designers and front-end developers who need to check spacing quickly without opening Chrome DevTools. It is free, needs no account, collects no data and works on any http or https page, including localhost. It runs in Chrome and in Chromium browsers that install from the Chrome Web Store, such as Microsoft Edge, Brave and Arc. It has 858 users.
+
+Key facts:
+
+- Inspect: hover any element to see margin (blue), border (yellow), padding (green), content and flex or grid gaps (purple stripes) with values on all four sides.
+- Measure: hold Alt (or press M) to see the distance in pixels between any two elements; click to pin measurements and press Shift+C to copy them as a spec.
+- Spacing Audit: press A to scan every margin, padding and gap on the page, detect a 4px or 8px grid, get a 0 to 100 score and a list of off-grid values with suggested fixes.
+- Copy: press C to copy an element's spacing as shorthand CSS, rem values or Tailwind classes such as mt-8 py-3.5 px-7.
+- Shortcut: Alt+Shift+S turns the inspector on or off on any page.
+- Price: free. Data collected: none.
+
+## Product
+
+- [Spacing Inspector website](https://spacinginspector.netlify.app/): features, an animated walkthrough, a live demo, a comparison with Chrome DevTools and FAQ
+- [Install from the Chrome Web Store](https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk): the official listing, free to install
+
+## Docs
+
+- [Full product description for AI assistants](https://spacinginspector.netlify.app/llms-full.txt): every feature, keyboard shortcut and FAQ answer in plain text
+- [How it works](https://spacinginspector.netlify.app/#how-it-works): install, hover, measure and audit, copy and ship
+- [Spacing Audit](https://spacinginspector.netlify.app/#audit): how the 0 to 100 spacing score is calculated
+- [FAQ](https://spacinginspector.netlify.app/#faq): price, privacy, browsers, localhost and Tailwind export
+
+## Optional
+
+- [Sitemap](https://spacinginspector.netlify.app/sitemap.xml)
