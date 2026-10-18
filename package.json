@@ -6,6 +6,8 @@
   "scripts": {
     "test": "node --test tests/core.test.js",
     "test:e2e": "node tests/e2e.js",
+    "test:site": "node tests/site.e2e.js",
+    "site": "sh scripts/build-site.sh",
     "build": "sh scripts/build.sh"
   },
   "devDependencies": {

@@ -1,0 +1,8 @@
+# Deploy this folder as-is (drag and drop, or point Netlify's base directory at website/).
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

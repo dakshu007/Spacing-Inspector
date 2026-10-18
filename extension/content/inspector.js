@@ -7,7 +7,9 @@
   if (!Core) return;
 
   const VERSION = '2.0.0';
-  const TAKEOVER = 'spacing-inspector:takeover';
+  // The website demo runs in the page's own world and sets its own event name,
+  // so it never fights with an installed copy of the extension.
+  const TAKEOVER = globalThis.SPACING_INSPECTOR_TAKEOVER || 'spacing-inspector:takeover';
 
   // A newer copy (re-injection or extension update) replaces any older one.
   document.dispatchEvent(new CustomEvent(TAKEOVER));
@@ -627,6 +629,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
     shouldIntercept(e) {
       if (e.button !== undefined && e.button !== 0 && e.type !== 'click') return false;
+      const t = this.targetOf(e);
+      if (t && t.closest && t.closest('[data-spacing-inspector-ignore]')) return false;
       if (this.mode === 'measure') return true;
       if (this.mode === 'inspect') return this.settings.pinOnClick;
       if (this.mode === 'audit') return !!this.groupIndexOf(this.targetOf(e));

@@ -67,7 +67,18 @@ tests/
   core.test.js        unit tests for lib/core.js
   e2e.js              loads the extension in Chromium, drives it on tests/fixtures, saves screenshots
 scripts/build.sh      builds dist/spacing-inspector-<version>.zip
+scripts/build-site.sh syncs extension code into website/
+website/              landing page (runs the real inspector as a live demo)
 ```
+
+## Website
+
+`website/` is the landing page (static, no build step). It runs the real inspector from the extension, so visitors can press `I`, `M` or `A` and inspect the page itself. The page is built to score 100 on its own Spacing Audit: every margin, padding and gap is one of 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96 or 128px. `npm run test:site` fails if that slips.
+
+- `npm run site` copies `extension/lib/core.js`, `extension/content/inspector.js` and the fonts into `website/` (rerun after changing them; `npm test` checks they match).
+- `website/demo-shim.js` stands in for the `chrome.*` APIs so the content script runs on a normal page.
+- Deploy: drag `website/` into Netlify, or set the site's base directory to `website`.
+- Keeps the existing Search Console tag, Google Analytics (`G-916SQC2VYS`), Tag Manager (`GTM-K977KWP4`) and Clarity. Each "Add to Chrome" click sends an `add_to_chrome` event with its placement.
 
 ## Develop
 
@@ -78,6 +89,7 @@ scripts/build.sh      builds dist/spacing-inspector-<version>.zip
 npm test            # unit tests (Node 18+)
 npm install         # once, for the end-to-end test
 npm run test:e2e    # loads the extension in Chromium and checks every mode
+npm run test:site   # landing page: no errors, live demo works, scores 100 on its own audit
 npm run build       # dist/spacing-inspector-2.0.0.zip, ready to upload
 ```
 
