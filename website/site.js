@@ -1,5 +1,5 @@
-// Spacing Inspector website: hero animation, live demo controls, live audit
-// stats, keycaps, copy buttons and scroll reveals.
+// Spacing Inspector website: live demo controls, live audit stats, keyboard
+// orbit, copy chips, mobile menu and scroll reveals.
 (() => {
   'use strict';
 
@@ -21,75 +21,15 @@
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
   }
 
-  // ---- hero mock: scale to fit, cycle scenes --------------------------------
-
-  const view = $('#frameView');
-  const mock = $('#mock');
-  const fit = () => mock.style.setProperty('--s', String(view.clientWidth / 1280));
-  if ('ResizeObserver' in window) new ResizeObserver(fit).observe(view);
-  fit();
-
-  const SCENES = ['inspect', 'measure', 'audit'];
-  const SCENE_MS = 4500;
-  const sceneTabs = $$('.scenes button');
-  let sceneIndex = 0;
-  let sceneTimer = 0;
-  let heroVisible = true;
-
-  function showScene(i) {
-    sceneIndex = (i + SCENES.length) % SCENES.length;
-    const name = SCENES[sceneIndex];
-    mock.dataset.scene = name;
-    sceneTabs.forEach((t) => {
-      const on = t.dataset.scene === name;
-      t.setAttribute('aria-selected', String(on));
-      // Restart the progress bar animation.
-      const bar = t.querySelector('b');
-      bar.style.animation = 'none';
-      void bar.offsetWidth;
-      bar.style.animation = '';
-    });
-    scheduleScene();
-  }
-
-  function scheduleScene() {
-    clearTimeout(sceneTimer);
-    if (reduceMotion || !heroVisible) {
-      $('.scenes').classList.add('paused');
-      return;
-    }
-    $('.scenes').classList.remove('paused');
-    $('.scenes').style.setProperty('--dur', `${SCENE_MS}ms`);
-    sceneTimer = setTimeout(() => showScene(sceneIndex + 1), SCENE_MS);
-  }
-
-  sceneTabs.forEach((t) => t.addEventListener('click', () => showScene(SCENES.indexOf(t.dataset.scene))));
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => {
-      heroVisible = entry.isIntersecting;
-      scheduleScene();
-    }).observe(view);
-  }
-  showScene(0);
-
-  // The tag under "pixel," shows the element's real size.
-  const pixel = $('.pixel');
-  const pixelSize = $('#pixelSize');
-  const sizePixel = () => {
-    const r = pixel.getBoundingClientRect();
-    pixelSize.textContent = `${Math.round(r.width)} × ${Math.round(r.height)}`;
-  };
-  addEventListener('resize', sizePixel, { passive: true });
-  if (document.fonts) document.fonts.ready.then(sizePixel);
-  sizePixel();
-
   // ---- live demo -------------------------------------------------------------
 
   const navToggle = $('#navToggle');
+  const navLabel = $('.nt-label', navToggle);
   function renderDemo() {
-    navToggle.setAttribute('aria-checked', String(demo.enabled));
+    navToggle.setAttribute('aria-pressed', String(demo.enabled));
+    navLabel.textContent = demo.enabled ? 'Demo on' : 'Live demo';
     document.body.classList.toggle('demo-on', demo.enabled);
-    $$('.mode-card').forEach((card) => card.classList.toggle('active', demo.enabled && card.dataset.demo === demo.mode));
+    $('.card-violet').classList.toggle('demo-active', demo.enabled);
   }
 
   function setDemo(patch) {
@@ -106,27 +46,25 @@
     });
   }
 
+  const HINTS = {
+    inspect: 'Inspect is on. Hover anything, click to pin, Esc to step back.',
+    measure: 'Measure is on. Click one element, then hover another.',
+    audit: 'Audit is on. This page’s report is on the right.'
+  };
+
   navToggle.addEventListener('click', () => {
     setDemo({ enabled: !demo.enabled });
-    if (demo.enabled) toast('Inspector on. Hover anything. Esc to step back.');
+    if (demo.enabled) toast(HINTS[demo.mode]);
   });
 
   $$('[data-demo]').forEach((el) =>
     el.addEventListener('click', () => {
-      const mode = el.dataset.demo;
-      const isCard = el.classList.contains('mode-card');
-      if (isCard && demo.enabled && demo.mode === mode) return setDemo({ enabled: false });
-      setDemo({ enabled: true, mode });
-      const hint = {
-        inspect: 'Inspect is on. Hover anything, click to pin.',
-        measure: 'Measure is on. Click one element, then hover another.',
-        audit: 'Audit is on. This page’s report is on the right.'
-      }[mode];
-      toast(hint);
+      setDemo({ enabled: true, mode: el.dataset.demo });
+      toast(HINTS[el.dataset.demo]);
     })
   );
 
-  // ---- keyboard: keycaps light up, I / M / A start the demo ---------------------
+  // ---- keyboard: orbit keys light up, I / M / A start the demo -------------------
 
   const keyFor = (e) => {
     if (e.key === 'Alt') return 'alt';
@@ -135,19 +73,19 @@
     return e.key.length === 1 ? e.key.toLowerCase() : '';
   };
   const isTyping = (t) => t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+  const keyEl = (k) => k && $(`.orb-key[data-key="${k}"]`);
 
   addEventListener(
     'keydown',
     (e) => {
-      const k = keyFor(e);
-      const cap = k && $(`.key[data-key="${k}"]`);
+      const cap = keyEl(keyFor(e));
       if (cap) cap.classList.add('lit');
       if (demo.enabled || !canHover || e.ctrlKey || e.metaKey || e.altKey || isTyping(e.target)) return;
-      const mode = { i: 'inspect', m: 'measure', a: 'audit' }[k];
+      const mode = { i: 'inspect', m: 'measure', a: 'audit' }[keyFor(e)];
       if (mode) {
         e.preventDefault();
         setDemo({ enabled: true, mode });
-        toast(`${mode[0].toUpperCase()}${mode.slice(1)} is on. Esc to step back.`);
+        toast(HINTS[mode]);
       }
     },
     true
@@ -155,13 +93,12 @@
   addEventListener(
     'keyup',
     (e) => {
-      const k = keyFor(e);
-      const cap = k && $(`.key[data-key="${k}"]`);
-      if (cap) setTimeout(() => cap.classList.remove('lit'), 120);
+      const cap = keyEl(keyFor(e));
+      if (cap) setTimeout(() => cap.classList.remove('lit'), 140);
     },
     true
   );
-  addEventListener('blur', () => $$('.key.lit').forEach((c) => c.classList.remove('lit')));
+  addEventListener('blur', () => $$('.orb-key.lit').forEach((c) => c.classList.remove('lit')));
 
   // ---- live audit of this page ------------------------------------------------------
 
@@ -169,16 +106,18 @@
     if (!Demo) return;
     const s = Demo.send({ type: 'audit:summary', auditBase: 'auto' });
     if (!s) return;
-    const big = 2 * Math.PI * 80;
-    const small = 2 * Math.PI * 32;
+    const big = 2 * Math.PI * 72;
     $('#bigArc').setAttribute('stroke-dasharray', `${(big * s.score) / 100} ${big}`);
     $('#bigRing').setAttribute('aria-label', `This page's spacing score: ${s.score} out of 100`);
     $('#bigScore').textContent = String(s.score);
     $('#bigLabel').textContent = s.label;
-    $('#statScanned').textContent = String(s.scanned);
+    $('#statScanned').textContent = `${s.scanned} elements`;
     $('#statGrid').textContent = `${s.onGridPct}%`;
     $('#statBase').textContent = `${s.base}px · detected`;
-    $$('.live-arc').forEach((arc) => arc.setAttribute('stroke-dasharray', `${(small * s.score) / 100} ${small}`));
+    $$('.live-arc').forEach((arc) => {
+      const c = 2 * Math.PI * Number(arc.dataset.r);
+      arc.setAttribute('stroke-dasharray', `${(c * s.score) / 100} ${c}`);
+    });
     $$('.live-score').forEach((el) => (el.textContent = String(s.score)));
 
     const bars = s.histogram.slice(0, 10);
@@ -203,48 +142,15 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(startAudit);
   else addEventListener('load', startAudit);
 
-  // ---- 01: layer list highlights the visual ---------------------------------------------
+  // ---- copy chips -----------------------------------------------------------------------
 
-  const visual = $('#inspectVisual');
-  const layerItems = $$('#layerList li');
-  let layerHover = false;
-  let layerIndex = -1;
-  const setLayer = (name) => {
-    visual.dataset.layer = name;
-    layerItems.forEach((li) => li.classList.toggle('on', li.dataset.layer === name));
-  };
-  layerItems.forEach((li) => {
-    li.addEventListener('mouseenter', () => {
-      layerHover = true;
-      setLayer(li.dataset.layer);
-    });
-    li.addEventListener('mouseleave', () => {
-      layerHover = false;
-      setLayer('');
-    });
-  });
-  if (!reduceMotion) {
-    setInterval(() => {
-      if (layerHover || !visual.classList.contains('in')) return;
-      layerIndex = (layerIndex + 1) % (layerItems.length + 1);
-      setLayer(layerIndex === layerItems.length ? '' : layerItems[layerIndex].dataset.layer);
-    }, 1600);
-  }
-
-  // ---- 04: copy cards -------------------------------------------------------------------
-
-  $$('.code-card').forEach((card) =>
-    card.addEventListener('click', async () => {
+  $$('.code-chip').forEach((chip) =>
+    chip.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(card.dataset.copy);
-        const label = card.querySelector('.cc-copy');
-        card.classList.add('copied');
-        label.textContent = 'Copied';
+        await navigator.clipboard.writeText(chip.dataset.copy);
+        chip.classList.add('copied');
         toast('Copied to clipboard');
-        setTimeout(() => {
-          card.classList.remove('copied');
-          label.textContent = 'Copy';
-        }, 1400);
+        setTimeout(() => chip.classList.remove('copied'), 1400);
       } catch (e) {
         toast('Your browser blocked the clipboard');
       }

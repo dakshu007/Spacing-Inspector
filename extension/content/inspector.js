@@ -142,6 +142,22 @@
     return { margin, padding, border, gap, display: cs.display, position: cs.position, rect: el.getBoundingClientRect() };
   }
 
+  const MARGIN_PROPS = ['margin-top', 'margin-right', 'margin-bottom', 'margin-left'];
+
+  // [top, right, bottom, left] booleans, or null when the typed OM is missing.
+  function autoMargins(el) {
+    if (typeof el.computedStyleMap !== 'function') return null;
+    try {
+      const map = el.computedStyleMap();
+      return MARGIN_PROPS.map((p) => {
+        const v = map.get(p);
+        return !!v && v.toString() === 'auto';
+      });
+    } catch (e) {
+      return null;
+    }
+  }
+
   function isRendered(el) {
     if (!el || !el.isConnected || !el.getClientRects) return false;
     return el.getClientRects().length > 0;
@@ -1579,9 +1595,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
           if (row > 0 || column > 0) gap = { row, column };
         }
         const inline = cs.display === 'inline';
-        // Equal left/right margins on a block are almost always `auto` centering.
-        const centered = !inline && margin[1] > 0 && Math.abs(margin[1] - margin[3]) < 0.5;
-        const skipM = [inline, centered, inline, centered];
+        const skipM = [inline, false, inline, false];
+        if (margin.some((v) => Math.abs(v) > 0.01)) {
+          // getComputedStyle reports `auto` margins as the space they absorb, so
+          // ask the typed OM which sides are really `auto` and skip those.
+          const autos = autoMargins(el);
+          if (autos) autos.forEach((isAuto, k) => (skipM[k] = skipM[k] || isAuto));
+          // Without the typed OM, equal left/right margins on a block are almost always centering.
+          else if (!inline && margin[1] > 0 && Math.abs(margin[1] - margin[3]) < 0.5) skipM[1] = skipM[3] = true;
+        }
         margin.forEach((v, k) => {
           if (!skipM[k] && Math.abs(v) > 0.01) values.push(v);
         });

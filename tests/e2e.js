@@ -157,6 +157,7 @@ async function main() {
       assert.ok(joined.includes(expected), `audit finds "${expected}" in:\n${joined}`);
     }
     assert.ok(!/margin-[lr]|margin-x/.test(joined), 'auto-centered margins are not flagged');
+    assert.ok(!/plan-cta/.test(joined), `margin-top: auto is not flagged:\n${joined}`);
     const score = await shadow("return root.querySelector('.ring b').textContent");
     assert.ok(Number(score) > 0 && Number(score) < 100, `score ${score}`);
     await page.screenshot({ path: path.join(SHOTS, '6-audit.png') });

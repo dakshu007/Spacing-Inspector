@@ -55,7 +55,7 @@ async function main() {
     await page.evaluate(() => scrollTo(0, 0));
     await page.keyboard.press('i');
     await page.waitForTimeout(150);
-    assert.equal(await page.locator('#navToggle').getAttribute('aria-checked'), 'true');
+    assert.equal(await page.locator('#navToggle').getAttribute('aria-pressed'), 'true');
     const lede = await page.locator('.lede').boundingBox();
     await page.mouse.move(lede.x + 40, lede.y + 10);
     await page.waitForTimeout(200);
@@ -66,10 +66,10 @@ async function main() {
     // nav toggle stays clickable while inspecting
     await page.locator('#navToggle').click();
     await page.waitForTimeout(100);
-    assert.equal(await page.locator('#navToggle').getAttribute('aria-checked'), 'false');
+    assert.equal(await page.locator('#navToggle').getAttribute('aria-pressed'), 'false');
 
     // audit mode via the button in the audit section
-    await page.locator('#audit .audit-cta button').click();
+    await page.locator('#audit [data-demo="audit"]').click();
     await page.waitForTimeout(300);
     await page.screenshot({ path: path.join(SHOTS, 'desktop-demo-audit.png') });
     const empty = await page.evaluate(() => document.getElementById('spacing-inspector-v2').shadowRoot.querySelector('.empty')?.textContent);

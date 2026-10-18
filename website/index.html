@@ -6,7 +6,7 @@
   <title>Spacing Inspector: see every margin, padding and gap on any website</title>
   <meta name="description" content="Free Chrome extension. Hover any element to see margin, border, padding and gaps. Measure distances like in Figma, score a page's spacing, and copy it as CSS or Tailwind.">
   <meta name="google-site-verification" content="4N5b9mUevn2OzdIqgR_kUHPo2D-JTpIfd1gN0cCx03s">
-  <meta name="theme-color" content="#08090C">
+  <meta name="theme-color" content="#0A0A0F">
   <link rel="canonical" href="https://spacinginspector.netlify.app/">
   <link rel="icon" type="image/png" href="img/icon128.png">
   <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Spacing Inspector 2.0: every pixel, accounted for">
   <meta name="twitter:description" content="Hover to see margin, padding, border and gaps. Measure distances, audit spacing, copy as CSS or Tailwind.">
   <meta name="twitter:image" content="https://spacinginspector.netlify.app/img/og.png">
-  <link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/DMSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spacing Inspector","applicationCategory":"DeveloperApplication","operatingSystem":"Chrome","softwareVersion":"2.0.0","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://spacinginspector.netlify.app/","downloadUrl":"https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk"}
@@ -36,418 +36,284 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <svg width="0" height="0" class="sprite" aria-hidden="true">
-    <symbol id="logo" viewBox="0 0 28 28" fill="none"><rect x="1.5" y="1.5" width="25" height="25" rx="6" stroke="#4C8DFF" stroke-width="1.7" stroke-dasharray="3 2.4"/><rect x="6" y="6" width="16" height="16" rx="4" stroke="#34D399" stroke-width="1.7"/><rect x="10.5" y="10.5" width="7" height="7" rx="1.6" fill="currentColor"/></symbol>
-    <symbol id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="logo" viewBox="0 0 28 28" fill="none"><rect x="1.5" y="1.5" width="25" height="25" rx="6" stroke="#8B7CFF" stroke-width="1.8" stroke-dasharray="3 2.4"/><rect x="6" y="6" width="16" height="16" rx="4" stroke="#C4BCFF" stroke-width="1.8"/><rect x="10.5" y="10.5" width="7" height="7" rx="1.6" fill="currentColor"/></symbol>
     <symbol id="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-    <symbol id="cursor" viewBox="0 0 18 22"><path d="M1 1l15 11-6.5 1.2L13 20l-2.6 1.2-3.4-6.8L1 18z" fill="#08090C" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="inspect" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    <symbol id="measure" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></symbol>
+    <symbol id="audit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-5"/></symbol>
+    <symbol id="code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></symbol>
+    <symbol id="copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
+    <symbol id="grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></symbol>
     <symbol id="menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></symbol>
     <symbol id="desktop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol>
   </svg>
 
   <header class="nav" id="top">
     <div class="wrap nav-row">
       <a class="brand" href="#top" aria-label="Spacing Inspector home">
-        <svg width="28" height="28"><use href="#logo"/></svg>
+        <span class="brand-mark"><svg width="20" height="20"><use href="#logo"/></svg></span>
         <span>Spacing Inspector</span>
-        <span class="ver">2.0</span>
       </a>
       <nav class="links" id="navLinks" aria-label="Main">
         <a href="#features">Features</a>
-        <a href="#demo">Live demo</a>
-        <a href="#audit">Spacing Audit</a>
         <a href="#keys">Shortcuts</a>
+        <a href="#how">How it works</a>
+        <a href="#audit">Spacing Audit</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav-actions">
-        <button class="demo-toggle desktop-only" id="navToggle" role="switch" aria-checked="false" data-spacing-inspector-ignore>
-          <span>Inspect this page</span><span class="sw" aria-hidden="true"><span></span></span>
+        <button class="pill-btn dark desktop-only" id="navToggle" aria-pressed="false" data-spacing-inspector-ignore>
+          <span class="dot" aria-hidden="true"></span><span class="nt-label">Live demo</span>
         </button>
-        <a class="btn btn-light btn-sm" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="nav">
-          <svg width="16" height="16" aria-hidden="true"><use href="#plus"/></svg>Add to Chrome
-        </a>
+        <a class="pill-btn violet" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="nav">Add to Chrome</a>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><svg width="20" height="20" aria-hidden="true"><use href="#menu"/></svg></button>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <!-- HERO ---------------------------------------------------------- -->
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="wrap hero-inner">
-        <a class="pill" href="#features">
-          <span class="pill-tag">NEW · 2.0</span>
-          <span class="long">Measure, Spacing Audit and Tailwind export</span><span class="short">Measure, Audit, Tailwind</span>
-          <svg width="14" height="14" aria-hidden="true"><use href="#arrow"/></svg>
-        </a>
-
-        <div class="headline-frame">
-          <span class="crop tl" aria-hidden="true"></span><span class="crop tr" aria-hidden="true"></span>
-          <span class="crop bl" aria-hidden="true"></span><span class="crop br" aria-hidden="true"></span>
-          <h1>
-            <span class="line">Every <span class="pixel"><span class="pm" aria-hidden="true"></span><span class="pp" aria-hidden="true"></span><span class="pv pv-m" aria-hidden="true">16</span><span class="pv pv-p" aria-hidden="true">12</span><span class="word">pixel,</span><span class="ptag" aria-hidden="true"><b>span.pixel</b><span id="pixelSize">264 × 104</span></span><svg class="pcursor" width="22" height="26" aria-hidden="true"><use href="#cursor"/></svg></span></span>
-            <span class="line">accounted for.</span>
-          </h1>
+      <div class="wrap hero-copy">
+        <a class="badge" href="#features"><span class="badge-new">New</span><span class="long">Spacing Inspector 2.0: Measure, Audit and Tailwind</span><span class="short">2.0: Measure, Audit, Tailwind</span><svg width="14" height="14" aria-hidden="true"><use href="#arrow"/></svg></a>
+        <h1>Every pixel,<br><span class="grad">accounted for.</span></h1>
+        <p class="lede">Hover anything on any website to see its margin, padding, border and gaps. Measure distances, score a page’s spacing, and copy it as CSS or Tailwind. Free forever.</p>
+        <div class="hero-ctas">
+          <a class="pill-btn violet lg" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="hero">Add to Chrome, it’s free<svg width="16" height="16" aria-hidden="true"><use href="#arrow"/></svg></a>
+          <button class="pill-btn dark lg desktop-only" data-demo="inspect" data-spacing-inspector-ignore>Try it on this page <kbd>I</kbd></button>
         </div>
-
-        <p class="lede">Hover anything on any website to see its margin, padding, border and gaps. Measure the distance between elements, score a page’s spacing, and copy it all as CSS or Tailwind.</p>
-
-        <div class="cta-row">
-          <a class="btn btn-light btn-lg glow" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="hero">
-            <svg width="18" height="18" aria-hidden="true"><use href="#plus"/></svg>Add to Chrome, it’s free
-          </a>
-          <button class="btn btn-ghost btn-lg desktop-only" data-demo="inspect" data-spacing-inspector-ignore>Try it on this page <kbd>I</kbd></button>
-        </div>
-        <ul class="meta">
-          <li>Free forever</li><li>No account</li><li>858 users</li><li>Works on any site</li>
-        </ul>
       </div>
 
-      <div class="wrap">
-        <figure class="frame reveal" aria-label="Spacing Inspector running on a sample pricing page">
-          <div class="frame-bar" aria-hidden="true">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url">yourwebsite.com/pricing</span>
-            <span class="ext"><svg width="14" height="14"><use href="#logo"/></svg></span>
+      <div class="stage" aria-hidden="true">
+        <div class="stage-glow"></div>
+        <div class="stage-floor"></div>
+        <svg class="stage-paths" viewBox="0 0 1200 520" preserveAspectRatio="none">
+          <path d="M250 150 C 200 200, 300 230, 230 300"/>
+          <path d="M930 140 C 1010 170, 980 230, 900 250"/>
+          <path d="M880 430 C 950 460, 1000 420, 1020 380"/>
+        </svg>
+
+        <div class="float f-icon f1"><svg width="20" height="20"><use href="#inspect"/></svg></div>
+        <div class="float f-icon f2 light"><svg width="20" height="20"><use href="#measure"/></svg></div>
+        <div class="float f-icon f3 small"><svg width="16" height="16"><use href="#spark"/></svg></div>
+
+        <div class="float f-box">
+          <div class="fb-head"><b>Box model</b><span>a.btn</span></div>
+          <div class="fb-m"><span class="v">32</span><div class="fb-p"><span>28</span><i></i><span>28</span></div></div>
+          <div class="fb-legend"><span><i class="m"></i>Margin</span><span><i class="p"></i>Padding</span></div>
+        </div>
+
+        <div class="float f-score">
+          <div class="fs-ring"><svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="22" fill="none" stroke="#2A2A36" stroke-width="6"/><circle class="live-arc" data-r="22" cx="28" cy="28" r="22" fill="none" stroke="#34D399" stroke-width="6" stroke-linecap="round" stroke-dasharray="0 139" transform="rotate(-90 28 28)"/></svg><b class="live-score">–</b></div>
+          <div><b>Spacing score</b><span>This page, live</span></div>
+        </div>
+
+        <div class="float f-keys"><span>I</span><span>M</span><span>A</span><span class="more">+7</span></div>
+        <div class="float f-chip"><span class="k-m">mt-8</span><span class="k-p">py-3.5</span><span class="k-p">px-7</span></div>
+
+        <div class="device">
+          <div class="screen">
+            <div class="sc-top"><svg width="20" height="20"><use href="#logo"/></svg>Spacing Inspector</div>
+            <div class="sc-page">
+              <div class="sc-row"><i class="c-v"><svg width="12" height="12"><use href="#inspect"/></svg></i><div><b>Inspecting a.btn</b><span>184 × 52 · flex</span></div></div>
+              <div class="sc-row"><i class="c-b"></i><div><b>Margin</b><span>32 · 0 · 0 · 0</span></div></div>
+              <div class="sc-row"><i class="c-g"></i><div><b>Padding</b><span>14 · 28 · 14 · 28</span></div></div>
+              <div class="sc-row light"><i class="c-w"><svg width="12" height="12"><use href="#check"/></svg></i><div><b>Copied as Tailwind</b><span>mt-8 py-3.5 px-7</span></div></div>
+            </div>
+            <div class="sc-foot">Every pixel.<br>Accounted.</div>
           </div>
-          <div class="frame-view" id="frameView">
-            <div class="mock" id="mock" data-scene="inspect" aria-hidden="true">
-              <div class="m-nav"></div>
-              <div class="m-logo"><i></i>Lumen</div>
-              <div class="m-links"><span>Product</span><b>Pricing</b><span>Docs</span><span>Changelog</span></div>
-              <div class="m-signin">Sign in</div>
-              <div class="m-eyebrow">New · Usage-based pricing</div>
-              <div class="m-title">Pricing that scales with your team</div>
-              <div class="m-sub">Start free. Upgrade when you need more seats, more projects or priority support.</div>
-              <div class="m-btn1">Start free trial</div>
-              <div class="m-btn2">Talk to sales</div>
-              <div class="m-card c1"><b>Starter</b><strong>$0</strong><span>For side projects.</span></div>
-              <div class="m-card c2"><b>Team</b><strong>$12</strong><span>For growing teams.</span></div>
-              <div class="m-card c3"><b>Business</b><strong>$29</strong><span>SSO and audit logs.</span></div>
+        </div>
+      </div>
+    </section>
 
-              <div class="sc sc-inspect">
-                <i class="o" style="left:462px;top:360px;width:184px;height:32px;background:rgba(76,141,255,.3)"></i>
-                <i class="o" style="left:462px;top:360px;width:184px;height:84px;border:1.5px dashed #4C8DFF"></i>
-                <i class="o hatch" style="left:646px;top:392px;width:12px;height:52px"></i>
-                <i class="o pad" style="left:463px;top:393px;width:182px;height:14px"></i>
-                <i class="o pad" style="left:463px;top:429px;width:182px;height:14px"></i>
-                <i class="o pad" style="left:463px;top:407px;width:28px;height:22px"></i>
-                <i class="o pad" style="left:617px;top:407px;width:28px;height:22px"></i>
-                <i class="o" style="left:462px;top:392px;width:184px;height:52px;border:1.5px solid #F2C94C;border-radius:10px"></i>
-                <b class="chip cm" style="left:554px;top:376px">32</b>
-                <b class="chip cp" style="left:477px;top:418px">28</b>
-                <b class="chip cp" style="left:631px;top:418px">28</b>
-                <b class="chip cp" style="left:554px;top:400px">14</b>
-                <b class="chip cg" style="left:668px;top:460px">gap 12</b>
-                <span class="m-tag" style="left:462px;top:452px"><b>a.btn-primary</b>184 × 52</span>
-                <div class="m-card-ui" style="left:996px;top:96px">
-                  <div class="mc-sel">a.btn-primary</div>
-                  <div class="mc-crumbs">section.hero › div.actions › <b>a</b></div>
-                  <div class="mc-bm"><span class="t">32</span><div class="mc-pad"><span>28</span><span class="dim">126 × 22</span><span>28</span></div></div>
-                  <div class="mc-code"><span class="k-m">mt-8</span><span class="k-p">py-3.5</span><span class="k-p">px-7</span><span class="k-b">border</span></div>
-                  <div class="mc-copy">Copy <kbd>C</kbd></div>
-                </div>
-              </div>
+    <!-- BAND -->
+    <section class="band" aria-label="Works on every website, whatever it is built with">
+      <div class="wrap band-row">
+        <span class="wm wm-1">React</span>
+        <span class="wm wm-2">Next.js</span>
+        <span class="wm wm-3">tailwind</span>
+        <span class="wm wm-4">Vue</span>
+        <span class="wm wm-5">WordPress</span>
+        <span class="wm wm-6">Shopify</span>
+        <span class="wm wm-7">Webflow</span>
+      </div>
+    </section>
 
-              <div class="sc sc-measure">
-                <i class="o" style="left:340px;top:304px;width:600px;height:56px;border:1.5px solid #7C6CF6;background:rgba(124,108,246,.06)"></i>
-                <span class="m-tag violet" style="left:340px;top:280px">p.subtitle · 600 × 56</span>
-                <i class="o" style="left:462px;top:392px;width:184px;height:52px;border:1.5px solid #FF4D8D;border-radius:10px"></i>
-                <i class="o red draw-y" style="left:553px;top:360px;width:2px;height:32px"></i>
-                <i class="o red" style="left:547px;top:360px;width:14px;height:2px"></i>
-                <i class="o red" style="left:547px;top:390px;width:14px;height:2px"></i>
-                <i class="o dash-v" style="left:340px;top:360px;height:58px"></i>
-                <i class="o dash-v" style="left:940px;top:360px;height:58px"></i>
-                <i class="o red draw-x" style="left:340px;top:417px;width:122px;height:2px"></i>
-                <i class="o red draw-x" style="left:646px;top:417px;width:294px;height:2px"></i>
-                <b class="chip cr" style="left:576px;top:376px">32</b>
-                <b class="chip cr" style="left:401px;top:432px">122</b>
-                <b class="chip cr" style="left:793px;top:432px">294</b>
-                <div class="m-tip" style="left:620px;top:456px">
-                  <div class="tp"><b class="a">p.subtitle</b> → <b class="b">a.btn-primary</b></div>
-                  <div class="tv"><span><i>↕</i>32</span><span><i>←</i>122</span><span><i>→</i>294</span></div>
-                  <div class="tf">Click to pin · Shift+C copies</div>
-                </div>
-                <i class="o" style="left:136px;top:508px;width:320px;height:248px;border:1px dashed rgba(255,77,141,.6);border-radius:16px"></i>
-                <i class="o" style="left:480px;top:508px;width:320px;height:248px;border:1px dashed rgba(255,77,141,.6);border-radius:16px"></i>
-                <i class="o red" style="left:456px;top:619px;width:24px;height:2px"></i>
-                <b class="chip cr-pin" style="left:468px;top:596px">24</b>
-              </div>
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>Power up your layout work<br>with Spacing Inspector’s <span class="grad">smart features</span></h2>
+          <p>It goes far beyond a highlight. See the whole box model, measure like in Figma, audit a page’s rhythm and copy what you see as code.</p>
+        </div>
 
-              <div class="sc sc-audit">
-                <i class="o" style="left:0;top:0;width:1280px;height:756px;background:rgba(23,23,26,.06)"></i>
-                <i class="o" style="left:538px;top:108px;width:204px;height:36px;border:2px solid #FF9F43;border-radius:18px;box-shadow:0 0 0 4px rgba(255,159,67,.22)"></i>
-                <i class="o hatch-o" style="left:542px;top:142px;width:196px;height:22px"></i>
-                <b class="chip co" style="left:752px;top:126px;transform:translate(0,-50%)">1 margin-b 22 → 24</b>
-                <i class="o" style="left:482px;top:16px;width:324px;height:32px;border:1.5px solid #FF9F43;border-radius:6px"></i>
-                <b class="chip co" style="left:816px;top:32px;transform:translate(0,-50%)">2 gap 18 → 16</b>
-                <i class="o" style="left:658px;top:392px;width:160px;height:52px;border:1.5px solid #FF9F43;border-radius:10px"></i>
-                <b class="chip co" style="left:658px;top:460px;transform:translate(0,-50%)">3 padding-y 13 → 12</b>
-                <i class="o" style="left:136px;top:508px;width:320px;height:248px;border:1.5px solid #FF9F43;border-radius:16px"></i>
-                <b class="chip co" style="left:136px;top:492px;transform:translate(0,-50%)">4 padding 30 → 32</b>
-                <div class="m-panel" style="left:900px;top:80px">
-                  <div class="mp-head">Spacing Audit</div>
-                  <div class="mp-score">
-                    <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#252B34" stroke-width="6"/><circle class="arc" cx="32" cy="32" r="26" fill="none" stroke="#34D399" stroke-width="6" stroke-linecap="round" stroke-dasharray="142 164" transform="rotate(-90 32 32)"/></svg>
-                    <b>87</b>
-                    <div><strong>Good rhythm</strong><span>312 elements · 8px grid</span></div>
-                  </div>
-                  <div class="mp-row on"><i>1</i><b>.eyebrow</b><span>margin-b <em>22</em> → <u>24</u></span></div>
-                  <div class="mp-row"><i>2</i><b>nav .links</b><span>gap <em>18</em> → <u>16</u></span></div>
-                  <div class="mp-row"><i>3</i><b>.btn-secondary</b><span>padding-y <em>13</em> → <u>12</u></span></div>
-                  <div class="mp-row"><i>4</i><b>.plan-card</b><span>padding <em>30</em> → <u>32</u></span></div>
-                  <div class="mp-btn">Copy all fixes as CSS</div>
-                </div>
-              </div>
-
-              <svg class="m-cursor" width="18" height="22"><use href="#cursor"/></svg>
-
-              <div class="m-dock">
-                <svg width="20" height="20"><use href="#logo"/></svg>
-                <span class="md-modes"><b data-m="inspect">Inspect</b><b data-m="measure">Measure</b><b data-m="audit">Audit</b></span>
-                <i class="md-sep"></i>
-                <span class="md-sw" style="background:#4C8DFF"></span><span class="md-sw" style="background:#F2C94C"></span><span class="md-sw" style="background:#34D399"></span><span class="md-sw hatch-sw"></span>
-                <span class="md-px">px</span>
+        <div class="bento">
+          <article class="card reveal">
+            <h3>Inspect the whole<br>box model</h3>
+            <p>Margin, border, padding, content and flex or grid gaps, each with its value on every side.</p>
+            <div class="ui ui-inspect" aria-hidden="true">
+              <div class="ui-panel">
+                <div class="up-head"><b>a.btn-primary</b><span>pinned</span></div>
+                <div class="up-bm"><span class="t">32</span><div class="up-pad"><span>28</span><i>126 × 22</i><span>28</span></div></div>
+                <div class="up-tags"><span class="m">margin</span><span class="b">border</span><span class="p">padding</span><span class="g">gap</span></div>
               </div>
             </div>
-          </div>
-        </figure>
-        <div class="scenes" role="tablist" aria-label="Hero demo">
-          <button role="tab" data-scene="inspect" aria-selected="true"><i><b></b></i>Inspect</button>
-          <button role="tab" data-scene="measure" aria-selected="false"><i><b></b></i>Measure</button>
-          <button role="tab" data-scene="audit" aria-selected="false"><i><b></b></i>Audit</button>
-        </div>
-      </div>
-    </section>
+          </article>
 
-    <!-- LIVE DEMO ------------------------------------------------------ -->
-    <section class="section" id="demo">
-      <div class="wrap">
-        <div class="center-head reveal">
-          <div class="label live"><i></i>Live on this page</div>
-          <h2 class="h-xl">Don’t watch a demo.<br><span class="muted-head">Use it.</span></h2>
-          <p class="sub">This whole page runs the real Spacing Inspector. Pick a mode, then hover anything, including this sentence.</p>
-        </div>
-        <div class="touch-note" role="note"><svg width="20" height="20" aria-hidden="true"><use href="#desktop"/></svg><span>This page is a live demo. Open it on a computer to inspect it with the real extension.</span></div>
-        <div class="mode-cards">
-          <button class="mode-card reveal" data-demo="inspect" data-spacing-inspector-ignore>
-            <span class="mc-art art-inspect" aria-hidden="true"><span><span><span></span></span></span></span>
-            <span class="mc-title">Inspect<kbd>I</kbd></span>
-            <span class="mc-desc">Hover any element for its margin, border, padding and gaps.</span>
-            <span class="mc-link"><span class="when-off">Turn on Inspect</span><span class="when-on">Inspecting now</span> →</span>
-          </button>
-          <button class="mode-card reveal" data-demo="measure" data-spacing-inspector-ignore>
-            <span class="mc-art art-measure" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="l"></span><span class="v">64</span></span>
-            <span class="mc-title">Measure<kbd>M</kbd></span>
-            <span class="mc-desc">Click one element, hover another, read the distance.</span>
-            <span class="mc-link"><span class="when-off">Turn on Measure</span><span class="when-on">Measuring now</span> →</span>
-          </button>
-          <button class="mode-card reveal" data-demo="audit" data-spacing-inspector-ignore>
-            <span class="mc-art art-audit" aria-hidden="true">
-              <span class="ring"><svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#1F232B" stroke-width="7"/><circle class="live-arc" cx="40" cy="40" r="32" fill="none" stroke="#34D399" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 201" transform="rotate(-90 40 40)"/></svg><b class="live-score">–</b></span>
-              <span class="bars"><i style="height:20px"></i><i style="height:56px"></i><i style="height:32px"></i><i style="height:44px"></i><i style="height:24px"></i><i style="height:12px"></i></span>
-            </span>
-            <span class="mc-title">Audit<kbd>A</kbd></span>
-            <span class="mc-desc">Score this page’s spacing. Spoiler: it’s on the grid.</span>
-            <span class="mc-link"><span class="when-off">Run the audit</span><span class="when-on">Auditing now</span> →</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 01 INSPECT ------------------------------------------------------ -->
-    <section class="section split-section" id="features">
-      <div class="wrap split">
-        <div class="split-text reveal">
-          <div class="label">01 / Inspect</div>
-          <h2 class="h-lg">The whole box model, not just a highlight.</h2>
-          <p class="body">Every layer is drawn separately with its value on every side, so you can tell a margin from a gap at a glance.</p>
-          <ul class="layers" id="layerList">
-            <li data-layer="margin"><i style="background:#4C8DFF"></i><b>Margin</b><span>Space outside the border</span></li>
-            <li data-layer="border"><i style="background:#F2C94C"></i><b>Border</b><span>The edge itself</span></li>
-            <li data-layer="padding"><i style="background:#34D399"></i><b>Padding</b><span>Breathing room inside</span></li>
-            <li data-layer="content"><i class="outline"></i><b>Content</b><span>What’s left for the content</span></li>
-            <li data-layer="gap"><i class="hatch-sw"></i><b>Gap</b><span>Flex and grid gaps, striped</span></li>
-          </ul>
-        </div>
-        <div class="visual reveal" id="inspectVisual" data-layer="">
-          <div class="dots-bg" aria-hidden="true"></div>
-          <div class="iv-card" aria-hidden="true">
-            <div class="iv-img"></div>
-            <b>Team plan</b>
-            <span>For growing teams shipping weekly.</span>
-            <div class="iv-btn">Start free trial</div>
-          </div>
-          <div class="iv-ov" aria-hidden="true">
-            <i class="iv-m"></i><i class="iv-mb"></i><i class="iv-b"></i><i class="iv-p"></i><i class="iv-c"></i><i class="iv-g"></i>
-            <b class="chip cm iv-mv">24</b><b class="chip cp iv-pv">12</b>
-            <span class="m-tag iv-tag"><b>a.btn</b>240 × 40</span>
-          </div>
-          <div class="ui-card" aria-hidden="true">
-            <div class="uc-head"><b>a.btn</b><span>pinned</span></div>
-            <div class="uc-crumbs">div.card › div.body › <b>a</b></div>
-            <div class="uc-bm"><span class="t">24</span><span class="b dim">0</span><div class="uc-pad"><span class="t">12</span><span class="b">12</span><div class="uc-content">192 × 16</div></div></div>
-            <div class="uc-code"><span class="k-m">margin</span>: 24px 0 0;<br><span class="k-p">padding</span>: 12px 24px;</div>
-            <div class="uc-actions"><span class="primary">Copy · C</span><span>Measure · M</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02 MEASURE ------------------------------------------------------ -->
-    <section class="section split-section">
-      <div class="wrap split reverse">
-        <div class="split-text reveal">
-          <div class="label">02 / Measure</div>
-          <h2 class="h-lg">Measure like you do in Figma.</h2>
-          <p class="body">Pink lines show the exact distance between any two elements, including how far an element sits from its container’s edges.</p>
-          <ul class="rows">
-            <li><kbd>hold Alt</kbd><span>Measure from whatever you’re inspecting</span></li>
-            <li><kbd>click</kbd><span>Pin a measurement and keep going</span></li>
-            <li><kbd>Shift C</kbd><span>Copy every measurement as a spec</span></li>
-          </ul>
-        </div>
-        <div class="visual measure-visual reveal" aria-hidden="true">
-          <div class="dots-bg"></div>
-          <div class="mv">
-            <i class="mv-a"></i><span class="mv-atag">h2.title · 480 × 56</span>
-            <i class="mv-b"></i>
-            <i class="mv-ly"></i><i class="mv-cap c1"></i><i class="mv-cap c2"></i><b class="chip cr mv-v">32</b>
-            <i class="mv-g g1"></i><i class="mv-g g2"></i>
-            <i class="mv-lx x1"></i><i class="mv-lx x2"></i>
-            <b class="chip cr mv-x1">136</b><b class="chip cr mv-x2">136</b>
-            <div class="m-tip mv-tip"><div class="tp"><b class="a">h2.title</b> → <b class="b">a.cta</b></div><div class="tv"><span><i>↕</i>32</span><span><i>←</i>136</span><span><i>→</i>136</span></div><div class="tf">Click to pin · Shift+C copies</div></div>
-            <i class="mv-c1"></i><i class="mv-c2"></i><i class="mv-pl"></i><b class="chip cr-pin mv-pv">24</b>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 AUDIT -------------------------------------------------------- -->
-    <section class="section" id="audit">
-      <div class="wrap">
-        <div class="center-head reveal">
-          <div class="label orange">03 / Spacing Audit</div>
-          <h2 class="h-xl">Is your spacing actually<br>on the grid?</h2>
-          <p class="sub">The audit scans every element, works out the grid you meant to use, and lists every value that drifted off it, with the fix.</p>
-        </div>
-        <div class="audit-board reveal">
-          <div class="ab-score">
-            <div class="big-ring">
-              <svg width="192" height="192" viewBox="0 0 192 192" role="img" id="bigRing" aria-label="This page's spacing score"><circle cx="96" cy="96" r="80" fill="none" stroke="#1A1D24" stroke-width="14"/><circle id="bigArc" cx="96" cy="96" r="80" fill="none" stroke="#34D399" stroke-width="14" stroke-linecap="round" stroke-dasharray="0 503" transform="rotate(-90 96 96)"/></svg>
-              <div><b id="bigScore">–</b><span>this page</span></div>
+          <article class="card reveal">
+            <h3>Measure like<br>you do in Figma</h3>
+            <p>Hold Alt and hover. Pink lines show the exact distance between any two elements.</p>
+            <div class="ui ui-measure" aria-hidden="true">
+              <i class="um-a"></i><i class="um-b"></i>
+              <i class="um-v"></i><b class="um-chip v">32</b>
+              <i class="um-g g1"></i><i class="um-g g2"></i><i class="um-h h1"></i><i class="um-h h2"></i>
+              <b class="um-chip h">96</b>
             </div>
-            <div class="ab-label" id="bigLabel">Scanning…</div>
-            <dl class="ab-stats">
-              <div><dt>Elements scanned</dt><dd id="statScanned">–</dd></div>
-              <div><dt>On the grid</dt><dd id="statGrid" class="good">–</dd></div>
-              <div><dt>Grid</dt><dd id="statBase">–</dd></div>
-            </dl>
-          </div>
-          <div class="ab-scale">
-            <h3>Detected spacing scale</h3>
-            <p>Every margin, padding and gap on this page, grouped by size. Measured live, right now.</p>
-            <div class="ab-bars" id="scaleBars"></div>
-            <div class="ab-ticks" id="scaleTicks"></div>
-          </div>
-          <div class="ab-issues">
-            <h3>On a typical site</h3>
-            <p>What it finds, and the fix it suggests.</p>
-            <ol class="issue-list">
-              <li class="on"><i>1</i><b>.card-body</b><span>padding <em>13</em> → <u>12</u></span></li>
-              <li><i>2</i><b>nav .links</b><span>gap <em>18</em> → <u>16</u></span></li>
-              <li><i>3</i><b>.eyebrow</b><span>margin-b <em>22</em> → <u>24</u></span></li>
-              <li><i>4</i><b>.btn-ghost</b><span>padding-y <em>13</em> → <u>12</u></span></li>
-            </ol>
-            <div class="fake-btn">Copy all fixes as CSS</div>
-          </div>
-        </div>
-        <div class="audit-cta reveal">
-          <button class="btn btn-light btn-md desktop-only" data-demo="audit" data-spacing-inspector-ignore>Run the audit on this page <kbd>A</kbd></button>
-          <span class="desktop-only">Then try it on your own site.</span>
+          </article>
+
+          <article class="card card-violet reveal">
+            <div class="cv-grid" aria-hidden="true"></div>
+            <h3>Try it live<br>on this page</h3>
+            <p>This whole page runs the real extension. Turn it on and hover anything.</p>
+            <button class="pill-btn white desktop-only" data-demo="inspect" data-spacing-inspector-ignore>Start the demo<svg width="14" height="14" aria-hidden="true"><use href="#arrow"/></svg></button>
+            <div class="touch-note" role="note"><svg width="20" height="20" aria-hidden="true"><use href="#desktop"/></svg><span>Open this page on a computer to try the live demo.</span></div>
+          </article>
+
+          <article class="card card-wide reveal" id="audit">
+            <div class="aud-text">
+              <span class="tag orange">Spacing Audit</span>
+              <h3>Is your spacing actually on the grid?</h3>
+              <p>One key scans every element, detects the 4px or 8px grid you meant to use, and lists every value that drifted off it, with the fix. Here’s this page, measured live:</p>
+              <dl class="aud-stats">
+                <div><dt>Scanned</dt><dd id="statScanned">–</dd></div>
+                <div><dt>On the grid</dt><dd id="statGrid" class="good">–</dd></div>
+                <div><dt>Grid</dt><dd id="statBase">–</dd></div>
+              </dl>
+              <button class="pill-btn dark desktop-only" data-demo="audit" data-spacing-inspector-ignore>Run the audit on this page <kbd>A</kbd></button>
+            </div>
+            <div class="aud-visual">
+              <div class="aud-ring">
+                <svg width="176" height="176" viewBox="0 0 176 176" role="img" id="bigRing" aria-label="This page's spacing score"><circle cx="88" cy="88" r="72" fill="none" stroke="#22222C" stroke-width="12"/><circle id="bigArc" cx="88" cy="88" r="72" fill="none" stroke="#34D399" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 453" transform="rotate(-90 88 88)"/></svg>
+                <div><b id="bigScore">–</b><span id="bigLabel">Scanning…</span></div>
+              </div>
+              <div class="aud-chart">
+                <div class="ab-bars" id="scaleBars"></div>
+                <div class="ab-ticks" id="scaleTicks"></div>
+                <span class="aud-cap">Spacing values on this page, by size</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <h3>Copy as CSS<br>or Tailwind</h3>
+            <p>Press C on any element. Click a snippet below to copy it.</p>
+            <div class="chips">
+              <button class="code-chip" data-copy="mt-8 py-3.5 px-7 border" data-spacing-inspector-ignore><span class="lbl">tw</span><code><span class="k-m">mt-8</span> <span class="k-p">py-3.5 px-7</span> <span class="k-b">border</span></code><svg width="14" height="14" aria-hidden="true"><use href="#copy"/></svg></button>
+              <button class="code-chip" data-copy="margin: 32px 0 0;&#10;padding: 14px 28px;" data-spacing-inspector-ignore><span class="lbl">css</span><code><span class="k-m">margin</span>: 32px 0 0;</code><svg width="14" height="14" aria-hidden="true"><use href="#copy"/></svg></button>
+              <button class="code-chip" data-copy="margin: 2rem 0 0;&#10;padding: 0.875rem 1.75rem;" data-spacing-inspector-ignore><span class="lbl">rem</span><code><span class="k-p">padding</span>: 0.875rem 1.75rem;</code><svg width="14" height="14" aria-hidden="true"><use href="#copy"/></svg></button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 04 COPY --------------------------------------------------------- -->
-    <section class="section split-section">
-      <div class="wrap split">
-        <div class="split-text reveal">
-          <div class="label">04 / Copy</div>
-          <h2 class="h-lg">From what you see to code, in one key.</h2>
-          <p class="body">Press C on any element. You get clean shorthand CSS, rem values, or the Tailwind classes that reproduce it, ready to paste.</p>
-        </div>
-        <div class="code-stack reveal">
-          <button class="code-card" data-copy="margin: 32px 0 0;&#10;padding: 14px 28px;" data-spacing-inspector-ignore>
-            <span class="cc-label">CSS</span>
-            <code><span class="k-m">margin</span>: 32px 0 0;<br><span class="k-p">padding</span>: 14px 28px;</code>
-            <span class="cc-copy">Copy</span>
-          </button>
-          <button class="code-card featured" data-copy="mt-8 py-3.5 px-7 border" data-spacing-inspector-ignore>
-            <span class="cc-label">Tailwind</span>
-            <code class="big"><span class="k-m">mt-8</span> <span class="k-p">py-3.5</span> <span class="k-p">px-7</span> <span class="k-b">border</span></code>
-            <span class="cc-copy">Copy</span>
-          </button>
-          <button class="code-card" data-copy="margin: 2rem 0 0;&#10;padding: 0.875rem 1.75rem;" data-spacing-inspector-ignore>
-            <span class="cc-label">rem</span>
-            <code><span class="k-m">margin</span>: 2rem 0 0;<br><span class="k-p">padding</span>: 0.875rem 1.75rem;</code>
-            <span class="cc-copy">Copy</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 KEYS --------------------------------------------------------- -->
+    <!-- KEYBOARD ORBIT -->
     <section class="section" id="keys">
       <div class="wrap">
-        <div class="center-head reveal">
-          <div class="label">05 / Keyboard</div>
-          <h2 class="h-xl">Every action, one key away.</h2>
-          <p class="sub desktop-only">Try them now. The keys light up as you press them.</p>
-        </div>
-        <div class="keys reveal">
-          <div class="key" data-key="i"><kbd>I</kbd><span>Inspect</span></div>
-          <div class="key" data-key="m"><kbd>M</kbd><span>Measure</span></div>
-          <div class="key" data-key="a"><kbd>A</kbd><span>Audit</span></div>
-          <div class="key" data-key="p"><kbd>P</kbd><span>Pin</span></div>
-          <div class="key" data-key="c"><kbd>C</kbd><span>Copy</span></div>
-          <div class="key" data-key="g"><kbd>G</kbd><span>Grid</span></div>
-          <div class="key" data-key="u"><kbd>U</kbd><span>Units</span></div>
-          <div class="key wide" data-key="arrow"><kbd>↑ ↓ ← →</kbd><span>Walk the DOM</span></div>
-          <div class="key mid" data-key="alt"><kbd>Alt</kbd><span>Hold to measure</span></div>
-          <div class="key mid" data-key="escape"><kbd>Esc</kbd><span>Back</span></div>
+        <div class="orbit-card reveal">
+          <div class="orbit-text">
+            <span class="tag">Keyboard first</span>
+            <h2>One key for<br>everything.</h2>
+            <p>Switch modes, pin, walk the DOM, copy and toggle the grid without touching the mouse. <span class="desktop-only">Press any key below: they light up.</span></p>
+            <ul class="mini-keys">
+              <li><kbd>I</kbd><kbd>M</kbd><kbd>A</kbd><span>Inspect, Measure, Audit</span></li>
+              <li><kbd>Alt</kbd><span>Hold to measure while inspecting</span></li>
+              <li><kbd>↑</kbd><kbd>↓</kbd><span>Walk to the parent or child</span></li>
+            </ul>
+          </div>
+          <div class="orbit" aria-hidden="true">
+            <i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i>
+            <div class="core"><div class="core-in"><svg width="48" height="48"><use href="#logo"/></svg></div></div>
+            <span class="orb-key" data-key="i" style="left:252px;top:68px">I</span>
+            <span class="orb-key" data-key="m" style="left:425px;top:189px">M</span>
+            <span class="orb-key" data-key="a" style="left:370px;top:393px">A</span>
+            <span class="orb-key" data-key="c" style="left:134px;top:393px">C</span>
+            <span class="orb-key" data-key="p" style="left:79px;top:315px">P</span>
+            <span class="orb-key light" data-key="g" style="left:30px;top:124px">G</span>
+            <span class="orb-key light" data-key="u" style="left:448px;top:87px">U</span>
+            <span class="orb-key light wide" data-key="alt" style="left:481px;top:340px">Alt</span>
+            <span class="orb-key light wide" data-key="escape" style="left:-1px;top:340px">Esc</span>
+            <span class="orb-key light" data-key="arrow" style="left:164px;top:493px">↑</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ ------------------------------------------------------------- -->
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <div class="head left reveal">
+          <h2>How Spacing Inspector<br>works for you?</h2>
+          <p>Install once. Then every website becomes something you can measure, audit and copy from in seconds.</p>
+        </div>
+        <div class="how">
+          <div class="how-stage reveal" aria-hidden="true">
+            <div class="stage-floor small"></div>
+            <div class="device small">
+              <div class="screen">
+                <div class="sc-top"><svg width="20" height="20"><use href="#logo"/></svg>Spacing Audit</div>
+                <div class="sc-score"><svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="8"/><circle class="live-arc" data-r="40" cx="48" cy="48" r="40" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 252" transform="rotate(-90 48 48)"/></svg><b class="live-score">–</b></div>
+                <div class="sc-page">
+                  <div class="sc-row"><i class="c-o">1</i><div><b>.card-body</b><span>padding 13 → 12</span></div></div>
+                  <div class="sc-row"><i class="c-o">2</i><div><b>nav .links</b><span>gap 18 → 16</span></div></div>
+                  <div class="sc-row light"><i class="c-w"><svg width="12" height="12"><use href="#copy"/></svg></i><div><b>Copy all fixes</b><span>as CSS</span></div></div>
+                </div>
+                <div class="sc-foot">On the grid.<br>Every time.</div>
+              </div>
+            </div>
+          </div>
+          <ol class="steps">
+            <li class="step reveal"><span class="num">01</span><div><h3>Add it to Chrome</h3><p>Free, no account. Works in Chrome, Edge, Brave and Arc.</p></div></li>
+            <li class="step reveal"><span class="num">02</span><div><h3>Hover anything</h3><p>Press I or Alt+Shift+S. Margin, border, padding and gaps appear with their values.</p></div></li>
+            <li class="step reveal"><span class="num">03</span><div><h3>Measure and audit</h3><p>Hold Alt to measure between elements. Press A for the page’s spacing score.</p></div></li>
+            <li class="step reveal"><span class="num">04</span><div><h3>Copy and ship</h3><p>Press C for CSS or Tailwind, or copy every audit fix at once.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
     <section class="section" id="faq">
-      <div class="wrap faq">
-        <div class="faq-head reveal">
-          <div class="label">FAQ</div>
-          <h2 class="h-md">Good questions.</h2>
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>Good questions</h2>
+          <p>Everything you need to know before you add it.</p>
         </div>
         <div class="faq-grid reveal">
-          <div><h3>Is it really free?</h3><p>Yes. Every feature, no account, no trial.</p></div>
-          <div><h3>Does it collect my data?</h3><p>No. It runs entirely in your browser. Settings sync through your own Chrome profile.</p></div>
-          <div><h3>How is the spacing score worked out?</h3><p>It reads every margin, padding and gap, detects a 4px or 8px grid, and scores how many values sit on it.</p></div>
-          <div><h3>Does it work on localhost?</h3><p>Yes, on any http or https page, including your dev server.</p></div>
-          <div><h3>Which browsers?</h3><p>Chrome, plus Chromium browsers that install from the Chrome Web Store, like Edge, Brave and Arc.</p></div>
-          <div><h3>I used 1.0. What changes?</h3><p>Your colors and settings carry over. Blue is still margin, green is still padding.</p></div>
+          <div class="qa"><h3>Is it really free?</h3><p>Yes. Every feature, no account, no trial.</p></div>
+          <div class="qa"><h3>Does it collect my data?</h3><p>No. It runs entirely in your browser. Settings sync through your own Chrome profile.</p></div>
+          <div class="qa"><h3>How is the spacing score worked out?</h3><p>It reads every margin, padding and gap, detects a 4px or 8px grid, and scores how many values sit on it.</p></div>
+          <div class="qa"><h3>Does it work on localhost?</h3><p>Yes, on any http or https page, including your dev server.</p></div>
+          <div class="qa"><h3>Which browsers?</h3><p>Chrome, plus Chromium browsers that install from the Chrome Web Store, like Edge, Brave and Arc.</p></div>
+          <div class="qa"><h3>I used 1.0. What changes?</h3><p>Your colors and settings carry over. Blue is still margin, green is still padding.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- FINAL CTA ------------------------------------------------------- -->
-    <section class="section final">
+    <!-- CTA -->
+    <section class="section">
       <div class="wrap">
-        <div class="final-card reveal">
-          <div class="final-grid" aria-hidden="true"></div>
-          <h2 class="h-xl">Stop eyeballing.<br>Start measuring.</h2>
-          <a class="btn btn-light btn-lg glow" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="footer">
-            <svg width="18" height="18" aria-hidden="true"><use href="#plus"/></svg>Add to Chrome, it’s free
-          </a>
+        <div class="cta-card reveal">
+          <div class="cv-grid" aria-hidden="true"></div>
+          <h2>Stop eyeballing.<br>Start measuring.</h2>
+          <p>Join 858 people who see every margin, padding and gap.</p>
+          <div class="hero-ctas">
+            <a class="pill-btn white lg" href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk" data-cta="footer">Add to Chrome, it’s free<svg width="16" height="16" aria-hidden="true"><use href="#arrow"/></svg></a>
+            <button class="pill-btn glass lg desktop-only" data-demo="measure" data-spacing-inspector-ignore>Try Measure <kbd>M</kbd></button>
+          </div>
         </div>
       </div>
     </section>
@@ -455,7 +321,7 @@
 
   <footer class="footer">
     <div class="wrap foot-row">
-      <a class="brand" href="#top"><svg width="22" height="22"><use href="#logo"/></svg><span>Spacing Inspector</span></a>
+      <a class="brand" href="#top"><span class="brand-mark"><svg width="18" height="18"><use href="#logo"/></svg></span><span>Spacing Inspector</span></a>
       <span class="copy">© 2026</span>
       <span class="grow"></span>
       <a href="https://chromewebstore.google.com/detail/spacing-inspector/ppnnhboeiefjhloholfbahddldadcjmk">Chrome Web Store</a>
