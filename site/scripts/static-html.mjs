@@ -36,8 +36,10 @@ for (const file of files) {
 }
 // The framework's JS and CSS chunks are no longer referenced (CSS is inlined).
 await rm(join(out, '_next/static/chunks'), { recursive: true, force: true });
-for (const e of await readdir(join(out, '_next/static'), { withFileTypes: true })) {
-  if (e.isDirectory() && e.name !== 'media') await rm(join(out, '_next/static', e.name), { recursive: true, force: true });
+for (const dir of ['_next', '_next/static']) {
+  for (const e of await readdir(join(out, dir), { withFileTypes: true })) {
+    if (e.isDirectory() && !['static', 'media'].includes(e.name)) await rm(join(out, dir, e.name), { recursive: true, force: true });
+  }
 }
 
 // Drop folders the RSC cleanup left empty.
