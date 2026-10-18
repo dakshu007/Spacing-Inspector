@@ -1,7 +1,8 @@
 // Post-build: the page is fully rendered at build time and client/enhance.ts
 // handles all interaction, so strip the Next.js/React runtime and RSC payload
 // from the exported HTML. Visitors get plain HTML + CSS and a 4 KB module.
-import { readdir, readFile, writeFile, rm } from 'node:fs/promises';
+import { readdir, readFile, writeFile, rm, rmdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const out = new URL('../out/', import.meta.url).pathname;
@@ -18,8 +19,9 @@ async function walk(dir) {
 
 const files = await walk(out);
 for (const file of files) {
-  // RSC payloads are only fetched by the client router, which is gone.
-  if (/(^|\/)(__next\.[^/]*|index|_not-found)\.txt$/.test(file.slice(out.length))) {
+  // RSC payloads (page.txt next to page.html, and __next.* segments) are only
+  // fetched by the client router, which is gone.
+  if (/(^|\/)__next\.[^/]*\.txt$/.test(file) || (file.endsWith('.txt') && existsSync(file.slice(0, -4) + '.html'))) {
     await rm(file);
     continue;
   }
@@ -32,4 +34,8 @@ for (const file of files) {
   await writeFile(file, html);
   console.log(`${file.slice(out.length)}: ${(before.length / 1024).toFixed(0)} KB → ${(html.length / 1024).toFixed(0)} KB`);
 }
-await rm(join(out, '_not-found'), { recursive: true, force: true });
+// Drop folders the RSC cleanup left empty.
+for (const e of await readdir(out, { withFileTypes: true })) {
+  const dir = join(out, e.name);
+  if (e.isDirectory() && (await readdir(dir)).length === 0) await rmdir(dir);
+}

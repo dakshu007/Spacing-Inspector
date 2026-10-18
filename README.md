@@ -69,6 +69,7 @@ tests/
 scripts/build.sh      builds dist/spacing-inspector-<version>.zip
 site/                 landing page (Next.js static export, runs the real inspector as a live demo)
 netlify.toml          builds and deploys site/
+store/                Chrome Web Store listing text (LISTING.md), screenshots and promo tiles
 ```
 
 ## Website
@@ -97,6 +98,7 @@ npm run test:e2e    # loads the extension in Chromium and checks every mode
 npm run site        # builds the landing page into site/out
 npm run test:site   # landing page: no errors, live demo works, scores 100 on its own audit
 npm run build       # dist/spacing-inspector-2.0.0.zip, ready to upload
+npm run store       # store/ screenshots and promo tiles (after npm run test:e2e)
 ```
 
 ## Permissions

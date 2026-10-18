@@ -24,6 +24,7 @@ Key facts:
 - [How it works](https://spacinginspector.netlify.app/#how-it-works): install, hover, measure and audit, copy and ship
 - [Spacing Audit](https://spacinginspector.netlify.app/#audit): how the 0 to 100 spacing score is calculated
 - [FAQ](https://spacinginspector.netlify.app/#faq): price, privacy, browsers, localhost and Tailwind export
+- [Privacy policy](https://spacinginspector.netlify.app/privacy): collects no personal data; everything runs in the browser
 
 ## Optional
 

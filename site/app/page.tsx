@@ -486,6 +486,7 @@ export default function Page() {
             <a href={STORE_URL}>Chrome Web Store</a>
             <a href="#features">Features</a>
             <a href="#faq">FAQ</a>
+            <a href="/privacy">Privacy</a>
             <a href="/llms.txt">llms.txt</a>
           </nav>
         </div>

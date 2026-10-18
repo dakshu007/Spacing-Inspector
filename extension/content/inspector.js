@@ -72,12 +72,19 @@
     return s;
   }
 
+  // The Spacing Inspector logo (same artwork as the toolbar icon).
   function logo(size = 20) {
-    const s = svg('svg', { width: size, height: size, viewBox: '0 0 28 28', fill: 'none', 'aria-hidden': 'true' });
+    const s = svg('svg', { width: size, height: size, viewBox: '0 0 128 128', 'aria-hidden': 'true' });
+    const head = (d) => svg('path', { d, fill: '#0FC0D6', stroke: '#0FC0D6', 'stroke-width': 3, 'stroke-linejoin': 'round' });
+    const line = (d, stroke) => svg('path', { d, stroke, 'stroke-width': 4.5, 'stroke-linecap': 'round' });
     s.append(
-      svg('rect', { x: 1.5, y: 1.5, width: 25, height: 25, rx: 6, stroke: '#4C8DFF', 'stroke-width': 2, 'stroke-dasharray': '3 2.4' }),
-      svg('rect', { x: 6, y: 6, width: 16, height: 16, rx: 4, stroke: '#34D399', 'stroke-width': 2 }),
-      svg('rect', { x: 10.5, y: 10.5, width: 7, height: 7, rx: 1.6, fill: 'currentColor' })
+      svg('rect', { width: 128, height: 128, rx: 22, fill: '#E3F8FA' }),
+      head('M46 33 57 45.5H35Z'),
+      head('M46 95 57 82.5H35Z'),
+      svg('path', { d: 'M46 44v40', stroke: '#0FC0D6', 'stroke-width': 8 }),
+      line('M67 38h29', '#80DDE9'),
+      line('M65 64h31', '#0FC0D6'),
+      line('M67 90h29', '#90E3EC')
     );
     return s;
   }

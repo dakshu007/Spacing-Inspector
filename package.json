@@ -8,7 +8,8 @@
     "test:e2e": "node tests/e2e.js",
     "test:site": "node tests/site.e2e.js",
     "site": "npm --prefix site run build",
-    "build": "sh scripts/build.sh"
+    "build": "sh scripts/build.sh",
+    "store": "node scripts/store-assets.js"
   },
   "devDependencies": {
     "playwright": "^1.56.1"
