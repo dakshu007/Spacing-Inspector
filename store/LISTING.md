@@ -8,7 +8,7 @@ Images in this folder (all 24-bit PNG, no alpha). Regenerate with
 | Screenshots (1280 x 800) | `screenshots/1-inspect-1280x800.png` … `screenshots/5-popup-1280x800.png` |
 | Small promo tile (440 x 280) | `promo-small-440x280.png` |
 | Marquee promo tile (1400 x 560) | `promo-marquee-1400x560.png` |
-| Store icon (128 x 128) | `../extension/icons/icon128.png` |
+| Store icon (128 x 128, artwork 96 x 96 + 16px transparent padding) | `icon-128.png` |
 
 ---
 

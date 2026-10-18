@@ -113,6 +113,12 @@ function marqueeTile() {
   <div class="shot"><img src="${img('1-inspect-hover.png')}"></div>`;
 }
 
+// Store icon: 128 x 128 with the artwork at 96 x 96 and 16px transparent
+// padding, per the Chrome Web Store image guidelines.
+function storeIcon() {
+  return `<style>html, body { margin: 0; background: transparent; width: 128px; height: 128px; } .logo { position: absolute; left: 16px; top: 16px; width: 96px; height: 96px; }</style>${LOGO}`;
+}
+
 const PAGES = [
   ['screenshots/1-inspect-1280x800.png', 1280, 800, screenshotPage({ title: 'See every <span class="s m">margin</span> &amp; <span class="s p">padding</span>', sub: 'Hover any element on any website. Margin, border, padding and gaps, with values on every side.', shot: '1-inspect-hover.png' })],
   ['screenshots/2-measure-1280x800.png', 1280, 800, screenshotPage({ title: 'Measure like in <span class="s t">Figma</span>', sub: 'Hold Alt and hover to see the exact distance between any two elements.', shot: '4-measure.png' })],
@@ -120,17 +126,18 @@ const PAGES = [
   ['screenshots/4-copy-1280x800.png', 1280, 800, screenshotPage({ title: 'Copy as CSS or <span class="s t">Tailwind</span>', sub: 'Press C to copy any element’s spacing as CSS, rem or Tailwind classes.', shot: '3-inspect-tailwind.png' })],
   ['screenshots/5-popup-1280x800.png', 1280, 800, popupPage()],
   ['promo-small-440x280.png', 440, 280, smallTile()],
-  ['promo-marquee-1400x560.png', 1400, 560, marqueeTile()]
+  ['promo-marquee-1400x560.png', 1400, 560, marqueeTile()],
+  ['icon-128.png', 128, 128, storeIcon(), true]
 ];
 
 (async () => {
   fs.mkdirSync(path.join(OUT, 'screenshots'), { recursive: true });
   const browser = await chromium.launch();
-  for (const [file, width, height, html] of PAGES) {
+  for (const [file, width, height, html, transparent] of PAGES) {
     const page = await browser.newPage({ viewport: { width, height } });
     await page.setContent(`<!doctype html><meta charset="utf-8"><body>${html}</body>`);
     await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({ path: path.join(OUT, file), type: 'png' });
+    await page.screenshot({ path: path.join(OUT, file), type: 'png', omitBackground: !!transparent });
     await page.close();
     console.log(`store/${file}`);
   }
